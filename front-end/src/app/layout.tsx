@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import SlideUpComponent from "./components/SlideUpComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <main className="relative flex flex-col min-h-screen">
+        
         <Navbar />
-        <SlideUpComponent>
-          <div className="text-black">{children}</div>
-        </SlideUpComponent>
+          <div className="flex-grow flex-1">{children}</div>
+        </main>
       </body>
     </html>
   );

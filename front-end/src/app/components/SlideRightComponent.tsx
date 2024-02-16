@@ -3,12 +3,12 @@ import { motion, useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-const slideUpVariants = {
-    hidden: { y:  -100, opacity:  0 },
-    visible: { y:  0, opacity:  1, transition: { duration:  0.5 } },
+const sliderightvariant = {
+    hidden: { x:  100, opacity:  0 },
+    visible: { x:  0, opacity:  1, transition: { duration:  0.5 } },
   };
 
-const SlideUpComponent  =  ({ children } : any)  => {
+const SlideRightComponent  =  ({ children } : any)  => {
   const controls = useAnimation();
   const [ref, inView] = useInView();
 
@@ -24,11 +24,11 @@ const SlideUpComponent  =  ({ children } : any)  => {
       ref={ref}
       initial='hidden'
       animate={controls}
-      variants={slideUpVariants}
+      variants={sliderightvariant}
     >
       {children}
     </motion.div>
   );
 };
 
-export default SlideUpComponent;
+export default SlideRightComponent;
