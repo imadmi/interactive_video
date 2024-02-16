@@ -1,0 +1,15 @@
+version: '3'
+services:
+  dev-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: abc
+      POSTGRES_PASSWORD: DEVELOPMENT_PASSWORD
+      POSTGRES_DB: DEVELOPMENT_DB
+    ports:
+      - 5434:5432
+    networks:
+      - dev_network
+
+networks:
+  dev_network:
