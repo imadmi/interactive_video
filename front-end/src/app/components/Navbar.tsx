@@ -37,7 +37,7 @@ const Navbar = () => {
   }, [solutionsRef]);
 
   return (
-    <nav className=" text-black  sticky z-50 top-0 inset-x-0 flex justify-between items-center lg:mx-8">
+    <nav className=" text-black  sticky z-50 top-0 inset-x-0 flex justify-between items-center lg:px-8 bg-white h-14">
       <div className="text-base  font-sans">
         <Link href="/" className="hidden lg:block">
           <Image
