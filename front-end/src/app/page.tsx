@@ -12,8 +12,8 @@ import HowToBuild from "./components/HowToBuild";
 
 export default function Home() {
   return (
-    <div className="m-[26px] p-[24px]">
-      <div className="flex flex-col lg:flex-row">
+    <div className="">
+      <div className="m-[26px] p-[24px] flex flex-col lg:flex-row">
         <div className="relative flex flex-col lg:items-start items-center w-full">
           <SlideUpComponent>
             <h1 className="text-5xl sm:text-6xl font-serif lg:mx-0 mx-[10%] lg:text-start text-center">
@@ -50,13 +50,13 @@ export default function Home() {
           </SlideUpComponent>
         </div>
       </div>
-      <div className="text-gray-500 text-center w-full font-sans mb-12">
+      <div className="m-[26px] p-[24px] text-gray-500 text-center font-sans mb-12">
         <SlideUpComponent delay={6}>
           +10K companies scaled up with VideoAsk
         </SlideUpComponent>
       </div>
       <SlideUpComponent delay={7}>
-        <div className="text-center ">
+        <div className="text-center p-[24px] ">
           <Image
             src={companies}
             alt="companies"
