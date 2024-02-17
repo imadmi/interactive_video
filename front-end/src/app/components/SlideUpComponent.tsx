@@ -8,8 +8,7 @@ const slideUpVariants = {
   visible: (custom: any) => ({
     y: 0,
     opacity: 1,
-    transition: { duration: 0.5 },
-  }),
+    transition: { duration: 0.5, delay: custom * 0.2 },  }),
 };
 
 const SlideUpComponent = ({ children, delay = 0 }: any) => {
@@ -29,6 +28,7 @@ const SlideUpComponent = ({ children, delay = 0 }: any) => {
       initial="hidden"
       animate={controls}
       variants={slideUpVariants}
+      className="relative"
     >
       {children}
     </motion.div>

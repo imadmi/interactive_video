@@ -56,7 +56,7 @@ const Navbar = () => {
           />
         </Link>
       </div>
-      <ul className="hidden lg:flex gap-8 text-[15px] font-sans justify-center mt-2">
+      <ul className="hidden lg:flex flex-grow gap-8 text-[15px] font-sans items-center justify-center bg-white h-12">
         <li>
           <Link href="/Product">
             <span className="">Product</span>
@@ -167,7 +167,9 @@ const Navbar = () => {
           )}
         </li>
       </ul>
-      <div className="flex flex-row gap-2 mr-6 text-[15px]">
+      <div className="lg:hidden flex bg-white flex-grow h-12"/>
+
+      <div className="flex flex-row gap-2 mr-6 text-[15px] bg-white">
         <button className="hidden lg:inline bg-gray-300 rounded-full px-4 py-2 mt-2">
           Log in
         </button>
