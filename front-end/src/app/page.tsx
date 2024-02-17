@@ -9,10 +9,15 @@ import companies2 from "../../public/companies2.png";
 import companies3 from "../../public/companies3.png";
 import companies4 from "../../public/companies4.png";
 import HowToBuild from "./components/HowToBuild";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
     <div className="">
+      <Navbar />
+
+
       <div className="m-[26px] p-[24px] flex flex-col lg:flex-row">
         <div className="relative flex flex-col lg:items-start items-center w-full">
           <SlideUpComponent>
@@ -84,9 +89,10 @@ export default function Home() {
           />
         </div>
       </SlideUpComponent>
-      <div>
+      <SlideUpComponent delay={8}>
         <HowToBuild />
-      </div>
+      </SlideUpComponent>
+        <Footer />
     </div>
   );
 }

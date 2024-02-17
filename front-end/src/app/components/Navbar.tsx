@@ -16,14 +16,10 @@ const Navbar = () => {
   const [isModalOpen, setisModalOpen] = useState(false);
   const solutionsRef = useRef(null);
 
-  const toggleSolutions = () => {
-    setSolutionsOpen(0);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (e: MouseEvent) => {
     if (
       solutionsRef.current &&
-      !(solutionsRef.current as unknown as Node).contains(event.target as Node)
+      !(solutionsRef.current as unknown as Node).contains(e.target as Node)
     ) {
       setSolutionsOpen(0);
     }
@@ -170,12 +166,12 @@ const Navbar = () => {
       <div className="lg:hidden flex bg-white flex-grow h-12"/>
 
       <div className="flex flex-row gap-2 mr-6 text-[15px] bg-white">
-        <button className="hidden lg:inline bg-gray-300 rounded-full px-4 py-2 mt-2">
+        <Link href="/login" className="hidden lg:inline bg-gray-300 rounded-full px-4 py-2 mt-2">
           Log in
-        </button>
-        <button className=" bg-black text-white rounded-full px-4 py-2 mt-2">
+        </Link>
+        <Link href="/signup" className="bg-black text-white rounded-full px-4 py-2 mt-2">
           Sign up
-        </button>
+        </Link>
         <div className="flex justify-center items-center lg:hidden mt-2">
           <AnimatePresence>
             {isModalOpen && (

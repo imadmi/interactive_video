@@ -45,7 +45,7 @@ const HowToBuild = () => {
   ];
 
   return (
-    <div className="flex lg:flex-row bg-[#131313] lg:rounded-[100px] rounded-[50px]">
+    <div className="flex lg:flex-row bg-[#131313] lg:rounded-[100px] rounded-[50px] mt-10">
       <div className=" text-white font-sans font-light px-4 py-12 sm:p-[5%] md:px-[15%] lg:pl-[5%] lg:pr-[5%] lg:w-[80%]">
         <div className="flex items-center justify-center lg:justify-start mt-4">
           <h1 className="sm:text-5xl text-4xl">
