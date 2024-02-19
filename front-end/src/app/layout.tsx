@@ -16,13 +16,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <body className={inter.className}>
-      <main className="relative flex flex-col min-h-screen">
-          <div className="flex-grow flex-1">{children}</div>
-        </main>
+        
+          <main className="relative flex flex-col min-h-screen">
+            <div className="flex-grow flex-1">{children}</div>
+          </main>
       </body>
     </html>
   );

@@ -9,10 +9,17 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoVolumeMuteSharp } from "react-icons/io5";
 import { IoMdVolumeMute } from "react-icons/io";
+import { useAppContext } from "../AppContext";
 
 const VideoPlayerControls = ({ progress }: { progress: number }) => {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const context = useAppContext();
 
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setScreenWidth(window.innerWidth);
+  }, []);
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -30,19 +37,52 @@ const VideoPlayerControls = ({ progress }: { progress: number }) => {
   return (
     <div className="absolute top-0 flex flex-col w-full h-full items-center justify-start">
       <div className="relative w-full">
-        <div className="absolute top-0 left-0 h-2 w-full bg-gray-800 opacity-40" />
-        <button
-          className="hidden lg:block absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-200 z-10"
-          style={{ width: `${Math.floor(progress * screenWidth * 0.4)}px` }}
-          onClick={() => {
-            console.log("Clicked on progress bar");
+        <div
+          className="absolute top-0 left-0 h-2 w-full bg-gray-800 opacity-40 z-10 cursor-pointer"
+          onClick={(event) => {
+            event.stopPropagation();
+
+            let clickRatio;
+
+            if (screenWidth > 1024) {
+              clickRatio =
+                (event.clientX - screenWidth * 0.1) /
+                (screenWidth - screenWidth * 0.6);
+            } else {
+              clickRatio =
+                (event.clientX - screenWidth * 0.1) /
+                (screenWidth - screenWidth * 0.2);
+            }
+            context.setUpdatedCurrentTime(clickRatio * context.videoDuration);
+            console.log("clickRatio ", clickRatio);
           }}
         />
         <button
-          className="lg:hidden absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-200 z-10"
+          className="hidden lg:block absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-75 z-10"
+          style={{ width: `${Math.floor(progress * screenWidth * 0.4)}px` }}
+          onClick={(event) => {
+            event.stopPropagation();
+
+            let clickRatio =
+              (event.clientX - screenWidth * 0.1) /
+              (screenWidth - screenWidth * 0.6);
+
+            context.setUpdatedCurrentTime(clickRatio * context.videoDuration);
+            console.log("clickRatio ", clickRatio);
+          }}
+        />
+        <button
+          className="lg:hidden absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-75 z-10"
           style={{ width: `${Math.floor(progress * screenWidth * 0.8)}px` }}
-          onClick={() => {
-            console.log("Clicked on progress bar");
+          onClick={(event) => {
+            event.stopPropagation();
+
+            const clickRatio =
+              (event.clientX - screenWidth * 0.1) /
+              (screenWidth - screenWidth * 0.2);
+
+            context.setUpdatedCurrentTime(clickRatio * context.videoDuration);
+            console.log("Clicked on progress bar at x:", event.clientX, "y:");
           }}
         />
       </div>
@@ -51,6 +91,8 @@ const VideoPlayerControls = ({ progress }: { progress: number }) => {
 };
 
 const VideoAskComponent = () => {
+  const context = useAppContext();
+
   const [videoAsk, setvideoAsk] = useState(mockData[0]);
 
   const [inputValue, setInputValue] = useState("");
@@ -87,12 +129,12 @@ const VideoAskComponent = () => {
     const video = videoRef.current;
 
     if (video) {
-      console.log("Video duration: ", video.duration);
-      console.log("Video videoProgress: ", videoProgress);
+      // console.log("Video duration: ", video.duration);
+      // console.log("Video videoProgress: ", videoProgress);
       const handleMetadataLoaded = () => {
         // Now we can safely set the video duration
-        setVideoDuration(video.duration);
-        console.log("Video duration: ", video.duration);
+        context.setVideoDuration(video.duration);
+        // console.log("Video duration: ", video.duration);
       };
 
       // add event listener when the video is loaded
@@ -106,23 +148,29 @@ const VideoAskComponent = () => {
 
   useEffect(() => {
     if (isPaused) return;
-    if (videoRef.current) {
-      // videoRef.current.currentTime = 100;
-    }
 
     const currentTime = videoRef.current?.currentTime;
-    if (videoDuration != null && currentTime != null) {
-      let timer = setTimeout(() => {
-        if (videoProgress == currentTime / videoDuration) {
+
+    let timer = setTimeout(() => {
+      if (context.videoDuration != null && currentTime != null) {
+        if (videoProgress == currentTime / context.videoDuration) {
           setVideoProgress((prev) => prev + 0.000001);
         } else {
-          setVideoProgress(currentTime / videoDuration);
+          setVideoProgress(currentTime / context.videoDuration);
         }
-      }, 10);
+      }
+    }, 10);
 
-      return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
+  }, [videoAsk, videoProgress, context.videoDuration, isPaused]);
+
+  useEffect(() => {
+    if (videoRef.current && context.UpdatedCurrentTime != 0) {
+      videoRef.current.currentTime = context.UpdatedCurrentTime;
+
+      console.log("UpdatedCurrentTime: ", context.UpdatedCurrentTime);
     }
-  }, [videoAsk, videoProgress, videoDuration, isPaused]);
+  }, [videoAsk, context.UpdatedCurrentTime]);
 
   const togglePlayPause = () => {
     const video = videoRef.current;
@@ -260,7 +308,7 @@ const VideoAskComponent = () => {
             </h3>
             {videoAsk.questions.map((question, index) => (
               <button
-                className="flex flex-row items-center text-left lg:md:w-4/6 md:w-3/6 w-[90%] mb-2 p-3 bg-black bg-opacity-55 lg:text-black lg:bg-opacity-10 lg:border border-2 border-gray-700 border-opacity-5 hover:border-opacity-100 hover:border-violet-600 text-white py-2 px-4 rounded-full font-semibold font-sans"
+                className="flex flex-row items-center text-left lg:w-4/6 md:w-3/6 w-[90%] mb-2 p-3 bg-black bg-opacity-55 lg:text-black lg:bg-opacity-10 lg:border border-2 border-gray-700 border-opacity-5 hover:border-opacity-100 hover:border-violet-600 text-white py-2 px-4 rounded-full font-semibold font-sans"
                 key={index}
                 onClick={(event) => {
                   event.stopPropagation();
