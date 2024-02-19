@@ -1,12 +1,18 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { TbUserEdit } from "react-icons/tb";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoCloseCircleSharp } from "react-icons/io5";
+import logo from "../../../public/logo.svg";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+
 
 const Signup = () => {
+  const router = useRouter();
+
   const passwordRef = useRef(null);
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
@@ -18,6 +24,7 @@ const Signup = () => {
     lowerCase: false,
     number: false,
   });
+  const [errormsg, seterrormsg] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
@@ -47,6 +54,53 @@ const Signup = () => {
     setPasswordValidations(validations);
   };
 
+
+	const handleSubmit = async (e: any) => {
+
+		e.preventDefault();
+
+    if (name.trim().length == 0) {
+      seterrormsg('Enter your name');
+      return;
+    }
+    if (email.trim().length == 0) {
+      seterrormsg('Enter your mail');
+      return;
+    }
+    if (password.trim().length > 50 || password.trim().length < 8) {
+      seterrormsg('Wrong password');
+      return;
+    }
+		try {
+			const res = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}:3001/auth/signup`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+          credentials: 'include',
+
+          
+          body: JSON.stringify({
+						name: name.trim(),
+						email: email.trim(),
+						password: password,
+					}),
+				},
+			);
+
+			const data = await res.json();
+			if (data.succes === true) {
+				return router.push(`/dashboard`);
+			} else if (data.succes === false) {
+				seterrormsg(data.message);
+			}
+		} catch (e) {
+			seterrormsg('Error while signing up');
+		}
+	};
+
   return (
     <div className="relative w-screen h-screen flex items-center justify-center font-sans bg-slate-50">
       <div className="absolute right-0 top-0 p-8">
@@ -60,7 +114,8 @@ const Signup = () => {
       </div>
       <div className="w-[400px] p-5">
         <div className="text-lg">
-          <TbUserEdit size="50" className="mb-6" />
+        <Image src={logo} alt='logo' priority={true} className="mb-6 -translate-x-5" />
+
           Hello.
           <div className="font-semibold">To get started please sign up...</div>
         </div>
@@ -225,6 +280,10 @@ const Signup = () => {
                 </span>
               </label>
             </div>
+            <div className="text-red-500 text-xs font-thin font-mono">
+              {errormsg}
+            </div>
+
 
             <button
               className={`bg-violet-800 text-white rounded-md px-4 py-3 w-full mt-4 hover:py-[13px] ${
@@ -236,8 +295,9 @@ const Signup = () => {
                 passwordValidations.lowerCase &&
                 passwordValidations.number
                   ? "cursor-pointer"
-                  : "cursor-not-allowed"
+                  : "cursor-not-allowed "
               }`}
+              onClick={handleSubmit}
             >
               Create my account
             </button>

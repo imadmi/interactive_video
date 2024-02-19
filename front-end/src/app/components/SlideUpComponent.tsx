@@ -11,7 +11,7 @@ const slideUpVariants = {
     transition: { duration: 0.5, delay: custom * 0.2 },  }),
 };
 
-const SlideUpComponent = ({ children, delay = 0 }: any) => {
+const SlideUpComponent = ({ children, delay = 0 , className = ''}: any) => {
   const controls = useAnimation();
   const [ref, inView] = useInView();
 
@@ -28,7 +28,7 @@ const SlideUpComponent = ({ children, delay = 0 }: any) => {
       initial="hidden"
       animate={controls}
       variants={slideUpVariants}
-      className="relative"
+      className={`${className}`}
     >
       {children}
     </motion.div>
