@@ -58,7 +58,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 	const [blink, setBlink] = useState(false);
 	const [clickedButtonIndex, setClickedButtonIndex] = useState(0);
 
-
 	const contextValue: AppContextProps = {
 
 		UpdatedCurrentTime,

@@ -11,32 +11,45 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  password     String
-  name         String?
-  videos       Video[]
-  responses    Response[]
-  creationDate DateTime  @default(now())
+  id               Int       @id @default(autoincrement())
+  email            String    @unique
+  password         String
+  name             String?
+  // videos           Video[]
+  creationDate     DateTime  @default(now())
 }
 
-model Video {
-  id          Int       @id @default(autoincrement())
-  userId      Int
-  title       String
-  description String?
-  url         String
-  user        User?      @relation(fields: [userId], references: [id])
-  responses   Response[]
-  uploadDate  DateTime  @default(now())
+// model Video {
+//   id              Int       @id @default(autoincrement())
+//   userId          Int
+//   title           String
+//   url             String
+//   user            User?      @relation(fields: [userId], references: [id])
+//   questions       Questions[]
+//   uploadDate      DateTime  @default(now())
+// }
+
+// model Questions {
+//   id              Int      @id @default(autoincrement())
+//   videoId         Int
+//   question        String
+//   next_video_id   String?
+
+//   video           Video    @relation(fields: [videoId], references: [id])
+//   creationDate    DateTime @default(now())
+// }
+
+model VideoAsk {
+  id                 String     @unique
+  title              String
+  url                String
+  questions          Question[]
 }
 
-model Response {
-  id         Int      @id @default(autoincrement())
-  videoId    Int
-  userId     Int?
-  content    String?
-  video      Video    @relation(fields: [videoId], references: [id])
-  user       User?    @relation(fields: [userId], references: [id])
-  timestamp  DateTime @default(now())
+model Question {
+  id                 String     @id
+  question           String
+  next_video_id      String?
+  videoAskId         String
+  videoAsk           VideoAsk   @relation(fields: [videoAskId], references: [id])
 }
