@@ -9,7 +9,7 @@ export type VideoAsk = {
 };
 
 export type Qsts = {
-  id: string;
+  // id: string;
   question: string;
   next_video_id: string | null;
 };

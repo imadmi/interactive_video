@@ -120,12 +120,10 @@ export const VideoUploadForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(videoAsk),
-    }); 
+    });
     const data = await res.json();
 
     console.log(data);
-
-
 
     // // Convert the videoAsk object to a JSON string
     // const dataStr = JSON.stringify(videoAsk, null, 2);
@@ -152,7 +150,7 @@ export const VideoUploadForm = () => {
           {videoAsk.map((videoAsk, videoAskIndex) => (
             <div
               key={videoAskIndex}
-              className="border border-gray-300 p-4 rounded-md"
+              className="border border-gray-300 p-4 rounded-md mb-5"
             >
               <div className="mb-4">
                 <label
@@ -221,7 +219,8 @@ export const VideoUploadForm = () => {
                         handleQuestionChange(videoAskIndex, questionIndex, e)
                       }
                       required
-                      className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2 mr-2"
+                      placeholder="Question"
+                      className=" placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2 mr-2"
                     />
                     <input
                       type="text"
@@ -230,8 +229,8 @@ export const VideoUploadForm = () => {
                       onChange={(e) =>
                         handleQuestionChange(videoAskIndex, questionIndex, e)
                       }
-                      required
-                      className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
+                      placeholder="Next Video ID"
+                      className="placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
                     <button
                       type="button"
@@ -240,7 +239,10 @@ export const VideoUploadForm = () => {
                       }
                       className="flex justify-center"
                     >
-                      <AiOutlineDelete size="25" className="ml-2 mb-2" />
+                      <AiOutlineDelete
+                        size="25"
+                        className="ml-2 mb-2 hover:text-red-500"
+                      />
                     </button>
                   </div>
                 ))}

@@ -11,7 +11,7 @@ export type VideoAsk = {
 };
 
 export type Qsts = {
-  id: string;
+  // id: string;
   question: string;
   next_video_id: string | null;
 };
@@ -32,6 +32,7 @@ export class UsersService {
 
     for (const videoAsk of data) {
       const questions = videoAsk.questions.map((q) => ({
+
         question: q.question,
         next_video_id: q.next_video_id,
       }));

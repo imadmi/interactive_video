@@ -47,7 +47,7 @@ model VideoAsk {
 }
 
 model Question {
-  id                 String     @id
+  id                 Int        @id @default(autoincrement())
   question           String
   next_video_id      String?
   videoAskId         String
