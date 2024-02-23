@@ -11,9 +11,12 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "VideoAsk" (
+    "Id" SERIAL NOT NULL,
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "url" TEXT NOT NULL
+    "url" TEXT NOT NULL,
+
+    CONSTRAINT "VideoAsk_pkey" PRIMARY KEY ("Id")
 );
 
 -- CreateTable

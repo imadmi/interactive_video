@@ -12,11 +12,11 @@ export async function POST(request: NextRequest) {
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
 
-  // With the file data in the buffer, you can do whatever you want with it.
-  // For this, we'll just write it to the filesystem in a new location
-  const path = `./public/uploads/${file.name}_${Date.now()}`
+  const suffix = Date.now()+file.name ;
+  let path = `./public/uploads/${suffix}`
   await writeFile(path, buffer)
-  console.log(`open ${path} to see the uploaded file`)
-
-  return NextResponse.json({ success: true })
+  
+  // make the path available to the client
+  path = `/uploads/${suffix}`
+  return NextResponse.json({ success: true, path })
 }
