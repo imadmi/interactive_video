@@ -27,4 +27,14 @@ export class UsersController {
   getVideoAsk(@Param('id') id: string) {
     return this.UsersService.getVideoAsk(id);
   }
+
+  @Get('getVideoAsks')
+  getVideoAsks() {
+    return this.UsersService.getVideoAskswithoutId();
+  }
+
+  @Get('getVideoAskChain/:id')
+  getVideoAskChain(@Param('id') id: string) {
+    return this.UsersService.getVideoAskChain(id);
+  }
 }

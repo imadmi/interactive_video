@@ -4,7 +4,7 @@ import { useAppContext } from "../AppContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCirclePlay } from "react-icons/fa6";
 
-const PauseComponent = ({ togglePlayPause } : any) => {
+const PauseComponent = ({ togglePlayPause, buttonLink } : any) => {
   const context = useAppContext();
 
   return (
@@ -15,7 +15,16 @@ const PauseComponent = ({ togglePlayPause } : any) => {
             context.isFullscrean
               ? " top-[46%] "
               : " top-[40%] lg:top-[42%] lg:-translate-x-[20vw] "
-          } z-10 rounded-full shadow-black shadow-2xl cursor-pointer`}
+              
+          } 
+          ${
+            buttonLink === undefined
+              ? " top-[46%] "
+              : ""
+              
+          }
+          
+          z-10 rounded-full shadow-black shadow-2xl cursor-pointer`}
           onClick={togglePlayPause}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

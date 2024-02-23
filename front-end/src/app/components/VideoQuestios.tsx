@@ -23,48 +23,48 @@ const QuestionList = ({
           className="font-thin font-sans mb-3 lg:font-normal text-gray-300
        lg:text-gray-700 text-md lg:mb-3"
         >
-          {context.videoAsk && context.videoAsk.title && (
-            <>{context.videoAsk.title}</>
+          {context.videoAsks && context.videoAsks.title && (
+            <>{context.videoAsks.title}</>
           )}
         </h3>
-        {context.videoAsk && context.videoAsk.questions && (
+        {context.videoAsks && context.videoAsks.questions && (
           <>
-          {context.videoAsk.questions.map((question, index) => (
-            <button
-            className="flex flex-row items-center text-left lg:w-4/6 md:w-3/6 
+            {context.videoAsks.questions.map((question, index) => (
+              <button
+                className="flex flex-row items-center text-left lg:w-4/6 md:w-3/6 
             w-[90%] mb-2 lg:mb-3 p-3 bg-black bg-opacity-55 lg:text-black 
             lg:bg-opacity-10 lg:border border-2 border-gray-700 border-opacity-5 
             hover:border-opacity-100 hover:border-violet-600 text-white py-2 
             px-4 rounded-full font-semibold font-sans"
-            key={index}
-            onClick={(event) => {
-              event.stopPropagation();
-              handleQuestionClick(question.next_video_id);
-              context.setIsPaused(false);
-              toggleAnimation();
-              triggerBlink();
-              context.setClickedButtonIndex(index);
-              context.setUpdatedCurrentTime(0);
-              context.setPlaybackSpeed(1);
-            }}
-            style={{
-              animation:
-              context.blink && context.clickedButtonIndex === index
-              ? "blink 0.5s linear"
-              : "",
-            }}
-            >
-            <div
-              className="bg-violet-600 bg-opacity-80 font-mono font-thin 
+                key={index}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleQuestionClick(question.next_video_id);
+                  context.setIsPaused(false);
+                  toggleAnimation();
+                  triggerBlink();
+                  context.setClickedButtonIndex(index);
+                  context.setUpdatedCurrentTime(0);
+                  context.setPlaybackSpeed(1);
+                }}
+                style={{
+                  animation:
+                    context.blink && context.clickedButtonIndex === index
+                      ? "blink 0.5s linear"
+                      : "",
+                }}
+              >
+                <div
+                  className="bg-violet-600 bg-opacity-80 font-mono font-thin 
               text-sm w-8 h-8 rounded-full text-center flex items-center justify-center
               mr-3 lg:text-white"
-              >
-              {index + 1}
-            </div>
-            <div className="inline">{question.question}</div>
-          </button>
-        ))}
-        </>
+                >
+                  {index + 1}
+                </div>
+                <div className="inline">{question.question}</div>
+              </button>
+            ))}
+          </>
         )}
       </div>
     </div>

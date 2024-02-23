@@ -13,6 +13,8 @@ export type AppContextProps = {
   setScreenWidth: (screenWidth: number) => void;
   videoAsk: VideoAsk;
   setvideoAsk: (videoAsk: any) => void;
+  videoAsks: VideoAsk[];
+  setVideoAsks: (videoasks: VideoAsk[]) => void;
   videoProgress: number;
   setVideoProgress: (videoProgress: number) => void;
   isPaused: boolean;
@@ -27,6 +29,10 @@ export type AppContextProps = {
   setBlink: (blink: boolean) => void;
   clickedButtonIndex: number;
   setClickedButtonIndex: (clickedButtonIndex: number) => void;
+  isModalOpen: boolean;
+  setisModalOpen: (isModalOpen: boolean) => void;
+  VideoaskIndex: number;
+  setVideoaskIndex: (VideoaskIndex: number) => void;
 };
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -42,6 +48,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     url: "",
     questions: [],
   });
+  const [videoAsks, setVideoAsks] = useState<VideoAsk[]>([
+    {
+      id: "",
+      title: "",
+      url: "",
+      questions: [{ question: "", next_video_id: null }],
+    },
+  ]);
 
   const [UpdatedCurrentTime, setUpdatedCurrentTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState<number>(0);
@@ -54,6 +68,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [animate, setAnimate] = useState(false);
   const [blink, setBlink] = useState(false);
   const [clickedButtonIndex, setClickedButtonIndex] = useState(0);
+  const [isModalOpen, setisModalOpen] = useState(true);
+  const [VideoaskIndex, setVideoaskIndex] = useState(0);
+
 
   const contextValue: AppContextProps = {
     UpdatedCurrentTime,
@@ -80,6 +97,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setBlink,
     clickedButtonIndex,
     setClickedButtonIndex,
+    isModalOpen,
+    setisModalOpen,
+    VideoaskIndex,
+    setVideoaskIndex,
+    videoAsks,
+    setVideoAsks,
   };
 
   return (
