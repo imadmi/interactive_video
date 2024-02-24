@@ -1,15 +1,14 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { IoClose } from "react-icons/io5";
-import { MdCloudUpload } from "react-icons/md";
-import { VideoAsk } from "../get-started/types";
 import toast, { Toaster } from "react-hot-toast";
 import { useAppContext } from "../AppContext";
 import UploadVideo from "../components/UploadVideo";
+import { FaAnglesDown } from "react-icons/fa6";
 
 export const VideoUploadForm = () => {
   const context = useAppContext();
+  const [isFormVisible, setIsFormVisible] = useState<boolean[]>([true]);
 
   const handleVideoAskChange = (index: number, e: any) => {
     const newVideoAsk = [...context.videoAsks];
@@ -41,6 +40,15 @@ export const VideoUploadForm = () => {
   };
 
   const addVideoAsk = () => {
+    // make all the form invisible except the last one
+    const newIsFormVisible = [...isFormVisible];
+    newIsFormVisible.forEach((bool, index) => {
+      newIsFormVisible[index] = false;
+    });
+
+    newIsFormVisible.push(true);
+    setIsFormVisible(newIsFormVisible);
+
     context.setVideoAsks([
       ...context.videoAsks,
       {
@@ -59,6 +67,10 @@ export const VideoUploadForm = () => {
   };
 
   const removeVideoAsk = (index: number) => {
+    const newIsFormVisible = [...isFormVisible];
+    newIsFormVisible.splice(index, 1);
+    setIsFormVisible(newIsFormVisible);
+
     const newVideoAsk = [...context.videoAsks];
     newVideoAsk.splice(index, 1);
     context.setVideoAsks(newVideoAsk);
@@ -90,45 +102,23 @@ export const VideoUploadForm = () => {
     }
   };
 
-  const handleDragOver = (event: any) => {
-    event.preventDefault();
+  const handleHide = (index: number) => {
+    const newIsFormVisible = [...isFormVisible];
+    newIsFormVisible[index] = false;
+    setIsFormVisible(newIsFormVisible);
   };
 
-  const handelUpload = async (e: any, Videofile: File) => {
-    e.preventDefault();
-
-    if (!Videofile) return;
-
-    try {
-      const data = new FormData();
-      data.set("file", Videofile);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
-
-      const resData = await res.json();
-      if (!res.ok) return "";
-
-      if (resData && resData.success) {
-        context.setisModalOpen(false);
-        const newVideoAsk = [...context.videoAsks];
-        if ("url" in newVideoAsk[context.VideoaskIndex]) {
-          newVideoAsk[context.VideoaskIndex].url = resData.path;
-          context.setVideoAsks(newVideoAsk);
-        }
-        return resData.path;
-      } else {
-        toast.error("Failed to upload video");
-        return "";
-      }
-    } catch (e: any) {
-      toast.error("Failed to upload video" + e);
-      return "";
-    }
+  const handleInhide = (index: number) => {
+    const newIsFormVisible = [...isFormVisible];
+    newIsFormVisible[index] = true;
+    setIsFormVisible(newIsFormVisible);
   };
 
+  const toggleHide = (index: number) => {
+    const newIsFormVisible = [...isFormVisible];
+    newIsFormVisible[index] = !newIsFormVisible[index];
+    setIsFormVisible(newIsFormVisible);
+  };
 
   return (
     <div className="relative h-screen flex justify-center overflow-y-auto ">
@@ -142,132 +132,167 @@ export const VideoUploadForm = () => {
               key={videoAskIndex}
               className="border border-gray-300 p-4 rounded-md mb-5"
             >
-              {!videoAsk.url && context.isModalOpen && (
-                <UploadVideo />
-              )}
-              <div className="mb-4">
-                <label
-                  htmlFor={`title-${videoAskIndex}`}
-                  className="block text-sm font-sans text-gray-700 mb-2"
-                >
-                  Video identity:
-                </label>
-                <input
-                  type="text"
-                  id={`id-${videoAskIndex}`}
-                  name="id"
-                  value={videoAsk.id}
-                  onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                  required
-                  className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
-                />
-                <label
-                  htmlFor={`title-${videoAskIndex}`}
-                  className="block text-sm font-sans text-gray-700 mb-2"
-                >
-                  Video Title:
-                </label>
-                <input
-                  type="text"
-                  id={`title-${videoAskIndex}`}
-                  name="title"
-                  value={videoAsk.title}
-                  onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                  required
-                  className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
-                />
-              </div>
-              {/* <div className="mb-4">
-                <label
-                  htmlFor={`url-${videoAskIndex}`}
-                  className="block text-sm font-sans text-gray-700 mb-2"
-                >
-                  Video URL:
-                </label>
-                <input
-                  type="text"
-                  id={`url-${videoAskIndex}`}
-                  name="url"
-                  value={videoAsk.url}
-                  onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                  required
-                  className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
-                />
-              </div> */}
-              <div>
-                <div className="text-md font-semibold font-sans text-gray-700 mb-2">
-                  Questions :
+              {!videoAsk.url && context.isModalOpen && <UploadVideo />}
+              <div className="">
+                <div className="flex w-full flex-row justify-between">
+                  <div className="flex flex-row items-center">
+                    <label
+                      htmlFor={`title`}
+                      className={`block text-sm font-sans text-gray-700 ${
+                        isFormVisible[videoAskIndex] === true && "mb-2 "
+                      }`}
+                    >
+                      Video ID:
+                    </label>
+                    {isFormVisible[videoAskIndex] === false && (
+                      <div
+                        className={`ml-4 ${
+                          isFormVisible[videoAskIndex] === true && "mb-2 "
+                        }`}
+                      >
+                        {videoAsk.id}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    className="relative"
+                    onClick={() => toggleHide(videoAskIndex)}
+                  >
+                    <FaAnglesDown
+                      size="17 "
+                      className={`text-gray-400 relative ${
+                        isFormVisible[videoAskIndex] === true &&
+                        "rotate-180 mb-2 "
+                      } -z-50 ease-in-out transition-all duration-300`}
+                    />
+                  </button>
                 </div>
 
-                {videoAsk.questions.map((qst, questionIndex) => (
-                  <div
-                    key={questionIndex}
-                    className="flex items-center justify-center mb-4"
-                  >
+                {isFormVisible[videoAskIndex] === true && (
+                  <>
                     <input
                       type="text"
-                      name="question"
-                      value={qst.question}
-                      onChange={(e) =>
-                        handleQuestionChange(videoAskIndex, questionIndex, e)
-                      }
+                      id={`id`}
+                      name="id"
+                      value={videoAsk.id}
+                      onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
                       required
-                      placeholder="Question"
-                      className=" placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2 mr-2"
+                      className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
+                    <label
+                      htmlFor={`title`}
+                      className="block text-sm font-sans text-gray-700 mb-2"
+                    >
+                      Video Title:
+                    </label>
                     <input
                       type="text"
-                      name="next_video_id"
-                      value={qst.next_video_id || ""}
-                      onChange={(e) =>
-                        handleQuestionChange(videoAskIndex, questionIndex, e)
-                      }
-                      placeholder="Next Video ID"
-                      className="placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
+                      id={`title`}
+                      name="title"
+                      value={videoAsk.title}
+                      onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
+                      required
+                      className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        removeQuestion(videoAskIndex, questionIndex)
-                      }
-                      className="flex justify-center"
-                    >
-                      <AiOutlineDelete
-                        size="25"
-                        className="ml-2 mb-2 hover:text-red-500"
-                      />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center space-x-2">
-                <button
-                  type="button"
-                  onClick={() => addQuestion(videoAskIndex)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
-                >
-                  Add question
-                </button>
-                <button
-                  type="button"
-                  onClick={() => removeVideoAsk(videoAskIndex)}
-                  className="hover:bg-red-100 hover:border-red-400 inline-flex items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
-                >
-                  Delete VideoAsk
-                </button>
-                {!videoAsk.url && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      context.setVideoaskIndex(videoAskIndex);
-                      context.setisModalOpen(true);
-                    }}
-                    className="hover:bg-green-100 hover:border-green-400 inline-flex items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
-                  >
-                    Upload Video
-                  </button>
+                  </>
                 )}
               </div>
+
+              {isFormVisible[videoAskIndex] === true && (
+                <div className="border-b w-full border-gray-200 mt-4 mb-2" />
+              )}
+
+              {isFormVisible[videoAskIndex] === true && (
+                <>
+                  <div>
+                    <div className="text-md font-semibold font-sans text-gray-700 mb-2">
+                      Questions :
+                    </div>
+
+                    {videoAsk.questions.map((qst, questionIndex) => (
+                      <div
+                        key={questionIndex}
+                        className="flex items-center justify-center mb-4"
+                      >
+                        <input
+                          type="text"
+                          name="question"
+                          value={qst.question}
+                          onChange={(e) =>
+                            handleQuestionChange(
+                              videoAskIndex,
+                              questionIndex,
+                              e
+                            )
+                          }
+                          required
+                          placeholder="Question"
+                          className=" placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2 mr-2"
+                        />
+                        <input
+                          type="text"
+                          name="next_video_id"
+                          value={qst.next_video_id || ""}
+                          onChange={(e) =>
+                            handleQuestionChange(
+                              videoAskIndex,
+                              questionIndex,
+                              e
+                            )
+                          }
+                          placeholder="Next Video ID"
+                          className="placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            removeQuestion(videoAskIndex, questionIndex)
+                          }
+                          className="flex justify-center"
+                        >
+                          <AiOutlineDelete
+                            size="25"
+                            className="ml-2 mb-2 hover:text-red-500"
+                          />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {isFormVisible[videoAskIndex] === true && (
+                <>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      onClick={() => addQuestion(videoAskIndex)}
+                      className="inline-flex items-center px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+                    >
+                      Add question
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removeVideoAsk(videoAskIndex)}
+                      className="hover:bg-red-100 hover:border-red-400 inline-flex items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+                    >
+                      Delete VideoAsk
+                    </button>
+                    {!videoAsk.url && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          context.setVideoaskIndex(videoAskIndex);
+                          context.setisModalOpen(true);
+                        }}
+                        className="hover:bg-green-100 hover:border-green-400 inline-flex items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+                      >
+                        Upload Video
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           ))}
           <div className="flex justify-center mt-5 mb-3">
@@ -283,10 +308,10 @@ export const VideoUploadForm = () => {
               Add VideoAsk
             </button>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-5">
             <button
               onClick={handleSubmit}
-              className="w-40 text-center items-center px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+              className="mb-5 w-40 text-center items-center px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
             >
               Submit
             </button>

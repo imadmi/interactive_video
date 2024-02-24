@@ -23,13 +23,13 @@ const QuestionList = ({
           className="font-thin font-sans mb-3 lg:font-normal text-gray-300
        lg:text-gray-700 text-md lg:mb-3"
         >
-          {context.videoAsks && context.videoAsks.title && (
-            <>{context.videoAsks.title}</>
+          {context.videoAsk && context.videoAsk.title && (
+            <>{context.videoAsk.title}</>
           )}
         </h3>
-        {context.videoAsks && context.videoAsks.questions && (
+        {context.videoAsk && context.videoAsk.questions && (
           <>
-            {context.videoAsks.questions.map((question, index) => (
+            {context.videoAsk.questions.map((question, index) => (
               <button
                 className="flex flex-row items-center text-left lg:w-4/6 md:w-3/6 
             w-[90%] mb-2 lg:mb-3 p-3 bg-black bg-opacity-55 lg:text-black 

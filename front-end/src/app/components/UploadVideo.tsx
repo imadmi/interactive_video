@@ -3,6 +3,7 @@ import { MdCloudUpload } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import toast, { Toaster } from "react-hot-toast";
 import { useAppContext } from "../AppContext";
+import SlideUpComponent from "./SlideUpComponent";
 
 export default function UploadVideo() {
   const context = useAppContext();
@@ -47,7 +48,7 @@ export default function UploadVideo() {
         className="fixed inset-0 w-screen h-screen bg-gray-600 flex items-center 
                 justify-center bg-opacity-50 backdrop-blur-lg"
       >
-        <div className="relative w-[450px] h-96 bg-white rounded-[40px] p-4">
+        <div className="relative w-[450px] h-96 bg-white rounded-[40px] p-4 z-10">
           <button
             onClick={() => context.setisModalOpen(false)}
             className="absolute top-4 right-9"
