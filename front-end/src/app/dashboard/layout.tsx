@@ -1,6 +1,7 @@
 "use client";
 
 import { AppProvider } from "../AppContext";
+import Navbar from "../components/Navbar";
 
 export default function RootLayout({
   children,
@@ -9,6 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <AppProvider>
+      <Navbar />
         <div className="">{children}</div>
     </AppProvider>
   );

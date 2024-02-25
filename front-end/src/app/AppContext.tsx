@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { mockData } from "./get-started/mockData";
 import { VideoAsk } from "./get-started/types";
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+};
 
 export type AppContextProps = {
   UpdatedCurrentTime: number;
@@ -33,6 +38,8 @@ export type AppContextProps = {
   setisModalOpen: (isModalOpen: boolean) => void;
   VideoaskIndex: number;
   setVideoaskIndex: (VideoaskIndex: number) => void;
+  user: User | null;
+  setUser: (user: User) => void;
 };
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -68,9 +75,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [animate, setAnimate] = useState(false);
   const [blink, setBlink] = useState(false);
   const [clickedButtonIndex, setClickedButtonIndex] = useState(0);
-  const [isModalOpen, setisModalOpen] = useState(true);
+  const [isModalOpen, setisModalOpen] = useState(false);
   const [VideoaskIndex, setVideoaskIndex] = useState(0);
-
+  const [user, setUser] = useState<User | null>(null);
 
   const contextValue: AppContextProps = {
     UpdatedCurrentTime,
@@ -103,6 +110,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setVideoaskIndex,
     videoAsks,
     setVideoAsks,
+    user,
+    setUser,
   };
 
   return (

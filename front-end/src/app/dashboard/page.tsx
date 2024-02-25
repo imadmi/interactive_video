@@ -85,6 +85,7 @@ export const VideoUploadForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(context.videoAsks),
       }
     );
@@ -102,18 +103,6 @@ export const VideoUploadForm = () => {
     }
   };
 
-  const handleHide = (index: number) => {
-    const newIsFormVisible = [...isFormVisible];
-    newIsFormVisible[index] = false;
-    setIsFormVisible(newIsFormVisible);
-  };
-
-  const handleInhide = (index: number) => {
-    const newIsFormVisible = [...isFormVisible];
-    newIsFormVisible[index] = true;
-    setIsFormVisible(newIsFormVisible);
-  };
-
   const toggleHide = (index: number) => {
     const newIsFormVisible = [...isFormVisible];
     newIsFormVisible[index] = !newIsFormVisible[index];
@@ -121,7 +110,7 @@ export const VideoUploadForm = () => {
   };
 
   return (
-    <div className="relative h-screen flex justify-center overflow-y-auto ">
+    <div className="relative flex justify-center ">
       <div className="sm:w-[500px] w-[80%] my-[10%]">
         <div className="mb-4 font-sans font-bold text-lg">
           Create a videoAsk :
@@ -137,7 +126,6 @@ export const VideoUploadForm = () => {
                 <div className="flex w-full flex-row justify-between">
                   <div className="flex flex-row items-center">
                     <label
-                      htmlFor={`title`}
                       className={`block text-sm font-sans text-gray-700 ${
                         isFormVisible[videoAskIndex] === true && "mb-2 "
                       }`}
@@ -176,11 +164,9 @@ export const VideoUploadForm = () => {
                       name="id"
                       value={videoAsk.id}
                       onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                      required
                       className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
                     <label
-                      htmlFor={`title`}
                       className="block text-sm font-sans text-gray-700 mb-2"
                     >
                       Video Title:
@@ -191,7 +177,6 @@ export const VideoUploadForm = () => {
                       name="title"
                       value={videoAsk.title}
                       onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                      required
                       className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
                   </>
@@ -225,7 +210,6 @@ export const VideoUploadForm = () => {
                               e
                             )
                           }
-                          required
                           placeholder="Question"
                           className=" placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2 mr-2"
                         />
@@ -262,19 +246,19 @@ export const VideoUploadForm = () => {
               )}
 
               {isFormVisible[videoAskIndex] === true && (
-                <>
+                <div className="text-xs">
                   <div className="flex items-center space-x-2">
                     <button
                       type="button"
                       onClick={() => addQuestion(videoAskIndex)}
-                      className="inline-flex items-center px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+                      className="inline-flex items-center px-2 sm:px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
                     >
                       Add question
                     </button>
                     <button
                       type="button"
                       onClick={() => removeVideoAsk(videoAskIndex)}
-                      className="hover:bg-red-100 hover:border-red-400 inline-flex items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+                      className="hover:bg-red-100 hover:border-red-400 inline-flex items-center px-2 sm:px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
                     >
                       Delete VideoAsk
                     </button>
@@ -285,13 +269,13 @@ export const VideoUploadForm = () => {
                           context.setVideoaskIndex(videoAskIndex);
                           context.setisModalOpen(true);
                         }}
-                        className="hover:bg-green-100 hover:border-green-400 inline-flex items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+                        className="hover:bg-green-100 hover:border-green-400 inline-flex items-center px-2 sm:px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
                       >
                         Upload Video
                       </button>
                     )}
                   </div>
-                </>
+                </div>
               )}
             </div>
           ))}

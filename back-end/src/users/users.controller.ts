@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 export type VideoAsk = {
@@ -9,7 +9,6 @@ export type VideoAsk = {
 };
 
 export type Qsts = {
-  // id: string;
   question: string;
   next_video_id: string | null;
 };
@@ -19,8 +18,10 @@ export class UsersController {
   constructor(private UsersService: UsersService) {}
 
   @Post('saveVideoAsk')
-  createVideoAsk(@Body() mockData: VideoAsk[]) {
-    return this.UsersService.importVideoAsks(mockData);
+  createVideoAsk(@Body() mockData: VideoAsk[], @Req() req: any) {
+    const cookie = req.cookies;
+    const user = this.UsersService.getUserFromCookie(cookie);
+    return this.UsersService.importVideoAsks(mockData, user.id);
   }
 
   @Get('getVideoAsk/:id')
@@ -37,4 +38,18 @@ export class UsersController {
   getVideoAskChain(@Param('id') id: string) {
     return this.UsersService.getVideoAskChain(id);
   }
+
+  @Get('user')
+	user(@Req() req: any, @Res() res: any) {
+		try {
+      const cookie = req.cookies;
+			const userfromcookie = this.UsersService.getUserFromCookie(cookie);
+			if (userfromcookie === null) {
+				return res.json({ succes: false });
+			}
+      return res.json({ succes: true, user: userfromcookie });
+		} catch (e) {
+			return res.json({ succes: false });
+		}
+	}
 }

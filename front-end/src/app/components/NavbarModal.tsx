@@ -31,10 +31,10 @@ const Modal = () => {
   }, [solutionsRef]);
   return (
     <div
-      className="fixed top-14 left-0 text-1xl font-mono font-normal w-screen bg-white 
+      className="fixed top-14 left-0 text-1xl font-mono font-normal w-screen bg-white h-screen
     "
     >
-      <div className="p-4 mx-4 mt-10 rounded-lg flex flex-col justify-between h-[90vh]">
+      <div className="p-4 mx-4 mt-10 rounded-lg flex flex-col justify-between h-[85vh]">
         <ul className="flex flex-col gap-8 justify-center mt-2">
           <li>
             <SlideRightComponent >

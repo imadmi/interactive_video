@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
+import { Prisma, PrismaClient, User } from '@prisma/client';
+import { create } from 'domain';
+import { JWT_SECRET } from 'src/constants';
 
 const prisma = new PrismaClient();
 
@@ -11,14 +14,15 @@ export type VideoAsk = {
 };
 
 export type Qsts = {
-  // id: string;
   question: string;
   next_video_id: string | null;
 };
 
 @Injectable()
 export class UsersService {
-  async importVideoAsks(data: VideoAsk[]) {
+  constructor(private jwtService: JwtService) {}
+
+  async importVideoAsks(data: VideoAsk[], userId: number | null) {
     try {
       const videoAsks = await prisma.videoAsk.findMany({
         where: {
@@ -31,26 +35,41 @@ export class UsersService {
         return { success: false };
       }
 
-      for (const videoAsk of data) {
+      for (const [index, videoAsk] of data.entries()) {
         const questions = videoAsk.questions.map((q) => ({
           question: q.question,
           next_video_id: q.next_video_id,
         }));
-        await prisma.videoAsk.create({
-          data: {
-            id: videoAsk.id,
-            title: videoAsk.title,
-            url: videoAsk.url,
-            questions: {
-              create: questions,
+        if (index === 0 && userId !== null) {
+          await prisma.videoAsk.create({
+            data: {
+              id: videoAsk.id,
+              title: videoAsk.title,
+              url: videoAsk.url,
+              questions: {
+                create: questions,
+              },
+              userId: userId,
             },
-          },
-        });
+          });
+        } else {
+          await prisma.videoAsk.create({
+            data: {
+              id: videoAsk.id,
+              title: videoAsk.title,
+              url: videoAsk.url,
+              questions: {
+                create: questions,
+              },
+              userId: null,
+            },
+          });
+        }
       }
       return { success: true };
     } catch (error) {
       console.error('Error importing video asks:', error);
-      return { success: false , error: error};
+      return { success: false, error: error };
     }
   }
 
@@ -154,5 +173,25 @@ export class UsersService {
         })),
       };
     });
+  }
+
+  getUserFromCookie(cookie: any): User | null {
+    const jwt = cookie.jwt;
+    if (jwt === undefined) {
+      return null;
+    }
+    try {
+      const payload = this.jwtService.verify(jwt, {
+        secret: JWT_SECRET,
+      });
+
+      const user = payload.user;
+      if (user === null) {
+        return null;
+      }
+      return user;
+    } catch (e) {
+      return null;
+    }
   }
 }

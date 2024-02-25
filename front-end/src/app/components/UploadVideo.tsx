@@ -45,8 +45,8 @@ export default function UploadVideo() {
   return (
     <div>
       <div
-        className="fixed inset-0 w-screen h-screen bg-gray-600 flex items-center 
-                justify-center bg-opacity-50 backdrop-blur-lg"
+        className="fixed inset-0 w-screen h-screen bg-gray-500 flex items-center 
+                justify-center bg-opacity-40 backdrop-blur-lg"
       >
         <div className="relative w-[450px] h-96 bg-white rounded-[40px] p-4 z-10">
           <button

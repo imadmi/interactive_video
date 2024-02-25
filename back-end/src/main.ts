@@ -13,8 +13,8 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
-  await app.listen(3001);
   app.use(cookieParser());
+  await app.listen(3001);
 
 }
 bootstrap();
