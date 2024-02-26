@@ -194,4 +194,16 @@ export class UsersService {
       return null;
     }
   }
+
+  getVideoAsksByUser(userId: number) {
+    try {
+      return prisma.videoAsk.findMany({
+        where: {
+          userId,
+        },
+      });
+    } catch (e) {
+      return null;
+    }
+  }
 }

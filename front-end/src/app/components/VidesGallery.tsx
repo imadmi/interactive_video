@@ -1,23 +1,49 @@
-import React from "react";
-import { mockData } from "../get-started/mockData";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
+import toast from "react-hot-toast";
+import { useAppContext } from "../AppContext";
 
 export default function VidesGallery() {
+  const context = useAppContext();
 
-  const handleVideoRef = (e : any) => {
+  const handleVideoRef = (e: any) => {
     if (e) {
       e.playbackRate = 0.25;
     }
   };
 
+  useEffect(() => {
+    try {
+      const checkJwtCookie = async () => {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}:3001/myvideoasks`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        var data = await response.json();
+        if (data === null || data.succes === false) {
+          return;
+        } else if (context && data !== null) {
+          const myVideoAsks = data;
+          context.setMyVideoAsks(myVideoAsks);
+        }
+      };
+      checkJwtCookie();
+    } catch (error: any) {
+      const msg = "Error during login" + error.message;
+      toast.error(msg);
+    }
+  }, []);
 
   return (
     <div className="w-full px-[5%]">
       <div
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 
-      lg:grid-cols-4 gap-4 p-4"
+        lg:grid-cols-4 gap-4 p-4"
       >
-        {mockData.map((video) => (
+        {context.myVideoAsks && context.myVideoAsks.map((video) => (
           <div
             key={video.id}
             className="bg-white rounded-xl p-4 group cursor-pointer"
@@ -31,10 +57,11 @@ export default function VidesGallery() {
                 loop
                 ref={handleVideoRef}
               />
-              <VideoCard />
-              
+              <VideoCard Id={video.id} />
             </div>
-            <div className="w-full  text-center mt-2">{video.title}</div>
+            <div className="w-full  text-center mt-2">
+              {video.creationDate.split("T")[0]}
+            </div>
           </div>
         ))}
       </div>

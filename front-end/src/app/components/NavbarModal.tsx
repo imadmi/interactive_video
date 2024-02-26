@@ -1,25 +1,19 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import icon from "../../../public/icon.jpeg";
-import logo from "../../../public/logo.png";
-import logo_sm from "../../../public/logo_sm.png";
 import { IoIosArrowDown } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
-import { IoReorderThreeOutline } from "react-icons/io5";
-import { VscChromeClose } from "react-icons/vsc";
 import SlideRightComponent from "./SlideRightComponent";
+import { useAppContext } from "../AppContext";
 
 const Modal = () => {
-  const [isDropsOpen, setSolutionsOpen] = useState(0);
-  const solutionsRef = useRef(null);
+  const context = useAppContext();
+  const Ref = useRef<HTMLElement>(null);
+  const Ref1 = useRef<HTMLElement>(null);
+  const Ref2 = useRef<HTMLElement>(null);
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      solutionsRef.current &&
-      !(solutionsRef.current as unknown as Node).contains(event.target as Node)
-    ) {
-      setSolutionsOpen(0);
+  const handleClickOutside = (e: MouseEvent) => {
+    const refs = [Ref, Ref1, Ref2];
+    if (!refs.some((ref) => ref.current?.contains(e.target as Node))) {
+      context.setDropOpenModal(0);
     }
   };
 
@@ -28,53 +22,55 @@ const Modal = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [solutionsRef]);
+  }, []);
+
   return (
     <div
-      className="fixed top-14 left-0 text-1xl font-mono font-normal w-screen bg-white h-screen
-    "
+      className="fixed top-14 left-0 text-1xl font-mono font-normal 
+      w-screen bg-white h-screen"
     >
-      <div className="p-4 mx-4 mt-10 rounded-lg flex flex-col justify-between h-[85vh]">
+      <div
+        className="p-4 mx-4 mt-10 rounded-lg flex flex-col 
+      justify-between h-[85vh]"
+      >
         <ul className="flex flex-col gap-8 justify-center mt-2">
           <li>
-            <SlideRightComponent >
-              <Link href="/Product">
-                <span className="">Product</span>
-              </Link>
+            <SlideRightComponent>
+              <span className="cursor-pointer">Product</span>
             </SlideRightComponent>
           </li>
-          <li ref={solutionsRef} className="relative">
+          <li ref={Ref as any} className="relative">
             <SlideRightComponent delay={1}>
               <span
                 className="cursor-pointer"
-                onClick={() => setSolutionsOpen(1)}
+                onClick={() => context.setDropOpenModal(1)}
               >
                 Solutions
                 <IoIosArrowDown className="inline ml-1" size="18" />
               </span>
-              {isDropsOpen === 1 && (
-                <div className="absolute top-full mt-1 bg-white z-10 shadow-lg rounded-3xl min-w-52">
+              {context.isDropsOpenModal === 1 && (
+                <div
+                  className="absolute top-full mt-1 bg-white 
+                z-10 shadow-lg rounded-3xl min-w-52"
+                >
                   <ul className="py-1">
-                    <li className="">
-                      <Link href="/recruitment">
-                        <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                          Recruitment
-                        </div>
-                      </Link>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Recruitment
                     </li>
-                    <li className="">
-                      <Link href="/sales-marketing">
-                        <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                          Sales & Marketing
-                        </div>
-                      </Link>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Sales & Marketing
                     </li>
-                    <li className="">
-                      <Link href="/other">
-                        <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                          Other
-                        </div>
-                      </Link>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Other
                     </li>
                   </ul>
                 </div>
@@ -82,90 +78,88 @@ const Modal = () => {
             </SlideRightComponent>
           </li>
           <li>
-          <SlideRightComponent delay={2}>
-
-
-            <Link href="/Pricing">
-              <span className="">Pricing</span>
-            </Link>
-          </SlideRightComponent>
-          </li>
-          <li ref={solutionsRef} className="relative">
-          <SlideRightComponent delay={3}>
-
-
-            <span className="" onClick={() => setSolutionsOpen(2)}>
-              Examples
-              <IoIosArrowDown className="inline ml-1" size="18" />
-            </span>
-            {isDropsOpen === 2 && (
-              <div className="absolute top-full mt-1 z-10 bg-white shadow-lg rounded-3xl min-w-60">
-                <ul className="py-1">
-                  <li className="">
-                    <Link href="/templates">
-                      <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                        Templates
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="">
-                    <Link href="/case-studies">
-                      <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                        Case Studies
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="">
-                    <Link href="/examples">
-                      <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                        Inspiration Examples
-                      </div>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
+            <SlideRightComponent delay={2}>
+              <span className="cursor-pointer">Pricing</span>
             </SlideRightComponent>
           </li>
-          <li ref={solutionsRef} className="relative">
-          <SlideRightComponent delay={4}>
-
-
-            <span className="" onClick={() => setSolutionsOpen(3)}>
-              Resources
-              <IoIosArrowDown className="inline ml-1" size="18" />
-            </span>
-            {isDropsOpen === 3 && (
-                <div className="absolute top-full mt-1 z-10 bg-white shadow-lg rounded-3xl min-w-32">
-                <ul className="py-1">
-                  <li className="">
-                    <Link href="/blog">
-                      <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                        Blog
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="">
-                    <Link href="/community">
-                      <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                        Community
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="">
-                    <Link href="/help">
-                      <div className="block px-4 py-2 rounded-full hover:bg-gray-100 m-2">
-                        Help
-                      </div>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
+          <li ref={Ref1 as any} className="relative">
+            <SlideRightComponent delay={3}>
+              <span onClick={() => context.setDropOpenModal(2)}>
+                Examples
+                <IoIosArrowDown className="inline ml-1" size="18" />
+              </span>
+              {context.isDropsOpenModal === 2 && (
+                <div
+                  className="absolute top-full mt-1 z-10 bg-white 
+                shadow-lg rounded-3xl min-w-60"
+                >
+                  <ul className="py-1">
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Templates
+                    </li>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Case Studies
+                    </li>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Inspiration Examples
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </SlideRightComponent>
+          </li>
+          <li ref={Ref2 as any} className="relative">
+            <SlideRightComponent delay={4}>
+              <span
+                className="cursor-pointer"
+                onClick={() => context.setDropOpenModal(3)}
+              >
+                Resources
+                <IoIosArrowDown className="inline ml-1" size="18" />
+              </span>
+              {context.isDropsOpenModal === 3 && (
+                <div
+                  className="absolute top-full mt-1 z-10 bg-white 
+                shadow-lg rounded-3xl min-w-32"
+                >
+                  <ul className="py-1">
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Blog
+                    </li>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Community
+                    </li>
+                    <li
+                      className="block px-4 py-2 rounded-full 
+                      hover:bg-gray-100 m-2"
+                    >
+                      Help
+                    </li>
+                  </ul>
+                </div>
+              )}
             </SlideRightComponent>
           </li>
         </ul>
-        <button className="inline bg-gray-300 rounded-full px-4 py-2 mt-2 w-24">
+        <button
+          className="inline bg-gray-300 rounded-full px-4 py-2 
+        mt-2 w-24"
+        >
           Log in
         </button>
       </div>

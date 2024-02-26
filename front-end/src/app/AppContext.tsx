@@ -7,6 +7,13 @@ export type User = {
   email: string;
 };
 
+export type MyVideoAsk = {
+  id: string;
+  title: string;
+  url: string;
+  creationDate: string;
+};
+
 export type AppContextProps = {
   UpdatedCurrentTime: number;
   setUpdatedCurrentTime: (UpdatedCurrentTime: number) => void;
@@ -40,6 +47,14 @@ export type AppContextProps = {
   setVideoaskIndex: (VideoaskIndex: number) => void;
   user: User | null;
   setUser: (user: User) => void;
+  isDropsOpen: number;
+  setDropOpen: (isDropsOpen: number) => void;
+  isDropsOpenModal: number;
+  setDropOpenModal: (isDropsOpenModal: number) => void;
+  isNavbarModalOpen: boolean;
+  setNavbarModalOpen: (isNavbarModalOpen: boolean) => void;
+  myVideoAsks: MyVideoAsk[];
+  setMyVideoAsks: (myVideoAsks: MyVideoAsk[]) => void;
 };
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -78,6 +93,17 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [VideoaskIndex, setVideoaskIndex] = useState(0);
   const [user, setUser] = useState<User | null>(null);
+  const [isDropsOpen, setDropOpen] = useState(0);
+  const [isDropsOpenModal, setDropOpenModal] = useState(0);
+  const [isNavbarModalOpen, setNavbarModalOpen] = useState(false);
+  const [myVideoAsks, setMyVideoAsks] = useState<MyVideoAsk[]>([
+    {
+      id: "",
+      title: "",
+      url: "",
+      creationDate: "",
+    },
+  ]);
 
   const contextValue: AppContextProps = {
     UpdatedCurrentTime,
@@ -112,6 +138,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setVideoAsks,
     user,
     setUser,
+    isDropsOpen,
+    setDropOpen,
+    isNavbarModalOpen,
+    setNavbarModalOpen,
+    myVideoAsks,
+    setMyVideoAsks,
+    isDropsOpenModal,
+    setDropOpenModal,
   };
 
   return (

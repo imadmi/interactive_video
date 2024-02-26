@@ -6,7 +6,7 @@ import { useAppContext } from "../AppContext";
 import UploadVideo from "../components/UploadVideo";
 import { FaAnglesDown } from "react-icons/fa6";
 
-export const VideoUploadForm = () => {
+const VideoUploadForm = () => {
   const context = useAppContext();
   const [isFormVisible, setIsFormVisible] = useState<boolean[]>([true]);
 

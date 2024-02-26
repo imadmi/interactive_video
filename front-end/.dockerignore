@@ -1,0 +1,6 @@
+.git
+*.md
+.DS_Store
+node_modules/
+.next/
+build/

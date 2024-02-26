@@ -52,4 +52,18 @@ export class UsersController {
 			return res.json({ succes: false });
 		}
 	}
+
+  @Get('myVideoAsks')
+  myVideoAsks(@Req() req: any, @Res() res: any) {
+    const cookie = req.cookies;
+    const user = this.UsersService.getUserFromCookie(cookie);
+    if (user === null) {
+			return res.json({ succes: false });
+    }
+    const myVideoAsks = this.UsersService.getVideoAsksByUser(user.id);
+    if (myVideoAsks === null) {
+      return res.json({ succes: false });
+    }
+    return res.json({ succes: true, myVideoAsks });
+  }
 }

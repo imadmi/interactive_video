@@ -15,7 +15,7 @@ type HowToBuildcardProps = {
 
 const HowToBuild = () => {
   const [cardtoshow, setCardtoshow] = useState<number>(0);
-  const [videourl, setvideourl] = useState("/videos/howtobuild1.mp4");
+  const [videourl, setvideourl] = useState("/videos/howtobuild.mp4");
   const cards = [
     {
       title: "01. Record once",

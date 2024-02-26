@@ -1,0 +1,48 @@
+version: "3.8"
+
+volumes:
+  database_volume:
+
+services:
+  database:
+    image: postgres
+    container_name: database
+    ports:
+      - 5432:5432
+    env_file:
+      - ./back-end/.env
+    restart: always
+    networks:
+      - dev_network
+
+  back-end:
+    image: back-end
+    build: ./back-end
+    container_name: back-end
+    ports:
+      - 3001:3001
+      - 3002:3002
+    restart: always
+    depends_on:
+      - database
+    env_file:
+      - ./back-end/.env
+    networks:
+      - dev_network
+
+  front-end:
+    image: front-end
+    build: ./front-end
+    container_name: front-end
+    ports:
+      - 3000:3000
+    restart: always
+    depends_on:
+      - back-end
+    env_file:
+      - ./front-end/.env
+    networks:
+      - dev_network
+
+networks:
+  dev_network:
