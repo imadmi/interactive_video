@@ -200,7 +200,6 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
                 muted={context.isMuted}
                 autoPlay
                 className="h-full w-auto"
-                // controls
               >
                 <source src={context.videoAsk.url} />
                 <track
