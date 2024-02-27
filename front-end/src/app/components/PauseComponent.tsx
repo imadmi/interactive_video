@@ -31,7 +31,8 @@ const PauseComponent = ({ togglePlayPause, buttonLink } : any) => {
           exit={{ opacity: 0 }}
         >
           <FaCirclePlay
-            className="text-white rounded-full shadow-2xl bg-black bg-opacity-60"
+            className="text-white rounded-full shadow-2xl bg-black 
+            bg-opacity-60 opacity-80"
             size="70"
           />
         </motion.div>

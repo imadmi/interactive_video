@@ -59,7 +59,7 @@ const Navbar = () => {
 
   return (
     <>
-      {!context.isModalOpen && (
+      {!context.isModalOpen && context.isFullscrean === false && (
         <nav
           className=" text-black  sticky z-50 top-0 inset-x-0 
         flex justify-between items-center lg:px-8 bg-white h-14"

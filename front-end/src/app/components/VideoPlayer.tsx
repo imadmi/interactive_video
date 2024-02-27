@@ -1,12 +1,15 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { AppProvider, useAppContext } from "../AppContext";
-import VideoControls from "../components/VideoControllers";
-import PauseComponent from "../components/PauseComponent";
-import PauseVideo from "../components/PauseVideo";
-import VideoProgress from "../components/VideoProgress";
+import VideoControls from "./VideoControllers";
+import PauseVideo from "./PauseVideo";
+import VideoProgress from "./VideoProgress";
 
-export default function page() {
+const VideoPlayer = ({
+  VideoUrl,
+}: {
+  VideoUrl: string;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const context = useAppContext();
 
@@ -73,7 +76,6 @@ export default function page() {
     e.stopPropagation();
     const video = videoRef.current;
     if (video) {
-      console.log(context.isPaused);
       context.setIsPaused(!video.paused);
       // video.play() and video.pause() return a boolean value
       video.paused ? await video.play() : video.pause();
@@ -103,7 +105,7 @@ export default function page() {
   const divRef = useRef<HTMLDivElement>(null);
 
   // State to store the dimensions
-  const [dimensions, setDimensions] = useState({ width:  0, height:  0 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [cursorPosition, setCursorPosition] = useState(0);
 
   useEffect(() => {
@@ -121,10 +123,10 @@ export default function page() {
     updateDimensions();
 
     // Add event listener for window resize
-    window.addEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
 
     // Cleanup function to remove event listener
-    return () => window.removeEventListener('resize', updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -135,45 +137,43 @@ export default function page() {
     }
   };
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <div className="w-[500px] h-[400px]">
-        <div
-          className={`
+    <div
+      className={`
           ${
             context.isFullscrean
               ? "w-screen h-screen fixed top-0 right-0"
               : "relative w-full h-full"
           }
-          overflow-hidden
       `}
-          onClick={togglePlayPause}
-          ref={divRef} 
-          onMouseMove={handleMouseMove}
+      onClick={togglePlayPause}
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+    >
+      <VideoProgress
+        progress={context.videoProgress}
+        dimensions={dimensions}
+        cursorPosition={cursorPosition}
+      />
+      <PauseVideo togglePlayPause={togglePlayPause} />
 
-        >
-          <VideoProgress progress={context.videoProgress} 
-          dimensions={dimensions}
-          cursorPosition={cursorPosition}/>
-          <PauseVideo togglePlayPause={togglePlayPause} />
-
-          <VideoControls
-            videoRef={videoRef}
-            toggleFullscreen={toggleFullscreen}
-            toggleMute={toggleMute}
-            togglePlaybackSpeed={togglePlaybackSpeed}
-            formatTime={formatTime}
-          />
-          <video
-            ref={videoRef}
-            src="/videos/homevideo.mp4"
-            loop
-            muted={context.isMuted}
-            className="h-full w-auto object-cover rounded-3xl z-0"
-          >
-            <source src="/videos/homevideo.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
+      <VideoControls
+        videoRef={videoRef}
+        toggleFullscreen={toggleFullscreen}
+        toggleMute={toggleMute}
+        togglePlaybackSpeed={togglePlaybackSpeed}
+        formatTime={formatTime}
+      />
+      <video
+        ref={videoRef}
+        src={VideoUrl}
+        loop
+        muted={context.isMuted}
+        className="h-full w-full object-cover "
+      >
+        <source src={VideoUrl} type="video/mp4" />
+      </video>
     </div>
   );
-}
+};
+
+export default VideoPlayer;

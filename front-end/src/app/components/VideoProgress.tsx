@@ -36,9 +36,6 @@ const VideoProgress = ({
   // This ratio is then used to update the current time of the video.
   const ClickRatioFunc = (event: any) => {
     if (event.clientX === undefined) return;
-
-    console.log("cursorPosition", cursorPosition);
-
     let clickRatio = 0;
 
     if (context.isFullscrean === true) {
