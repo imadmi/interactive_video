@@ -57,7 +57,9 @@ export default function VidesGallery() {
                   autoPlay
                   loop
                   ref={handleVideoRef}
-                />
+                >
+                  <source src={video.url} type="video/mp4" />
+                </video>
                 <VideoCard Id={video.id} />
               </div>
               <div className="w-full  text-center mt-2">
