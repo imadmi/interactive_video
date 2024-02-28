@@ -4,32 +4,32 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import NvabarModalButton from "./NvabarModalButton";
 
-interface NavbarListProps {
+const NavbarUser = ({
+  NavbarRef,
+}: {
   NavbarRef: React.RefObject<HTMLElement>;
-}
-
-const NavbarUser: React.FC<NavbarListProps> = ({ NavbarRef }) => {
+}) => {
   const context = useAppContext();
   const path = usePathname();
 
   return (
     <>
       <div
-        className="relative flex flex-row gap-2 mr-6 text-[15px] bg-white 
-      items-center mt-2 justify-end h-12"
+        className="relative flex flex-row gap-2 mr-5 text-[15px] bg-white 
+      items-center justify-end h-12"
       >
         {context.user === null && (
           <>
             <Link
               href="/login"
               className="hidden lg:inline bg-gray-300 rounded-full px-4 py-2 
-              mt-2 mr-2"
+             mr-2"
             >
               Log in
             </Link>
             <Link
               href="/signup"
-              className="bg-black text-white rounded-full px-4 py-2 mt-2"
+              className="bg-black text-white rounded-full px-4 py-2"
             >
               Sign up
             </Link>

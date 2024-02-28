@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import logo from "../../../public/logo.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const Signup = () => {
+const Login = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [errormsg, seterrormsg] = useState("");
@@ -55,12 +55,14 @@ const Signup = () => {
     }
   };
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center font-sans bg-slate-50">
+    <div className="relative w-screen h-screen flex items-center 
+    justify-center font-sans bg-slate-50">
       <div className="absolute right-0 top-0 p-8">
         Don't have an account? &nbsp;
         <Link
           href="/signup"
-          className="bg-black px-4 py-2 rounded-full text-white hover:px-[17px] hover:py-[9px]"
+          className="bg-black px-4 py-2 rounded-full text-white 
+          hover:px-[17px] hover:py-[9px]"
         >
           Sign up
         </Link>
@@ -82,7 +84,9 @@ const Signup = () => {
               <input
                 type="text"
                 id="email"
-                className="form-input w-full bg-slate-50 focus:outline-none border-b border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2"
+                className="form-input w-full bg-slate-50 
+                focus:outline-none border-b border-gray-300 
+                focus:border-b-green-400 focus:shadow-outline pb-2"
                 placeholder="Your e-mail"
                 onChange={(e) => setemail(e.target.value)}
               />
@@ -92,7 +96,9 @@ const Signup = () => {
               <input
                 type="password"
                 id="password"
-                className="z-10 form-input w-full bg-slate-50 focus:outline-none border-b border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2 mb-6"
+                className="z-10 form-input w-full bg-slate-50 
+                focus:outline-none border-b border-gray-300 
+                focus:border-b-green-400 focus:shadow-outline pb-2 mb-6"
                 placeholder="Your password"
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -104,7 +110,8 @@ const Signup = () => {
             </div>
 
             <button
-              className={`bg-violet-800 text-white rounded-md px-4 py-3 w-full mt-4 hover:py-[13px]
+              className={`bg-violet-800 text-white rounded-md px-4
+               py-3 w-full mt-4 hover:py-[13px]
                 `}
                 onClick={handleemail}
             >
@@ -117,4 +124,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

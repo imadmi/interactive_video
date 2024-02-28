@@ -8,10 +8,12 @@ import { AiOutlineYoutube } from "react-icons/ai";
 const Footer = () => {
   return (
     <div
-      className="mt-20 pb-10 w-full bg-black md:rounded-t-[100px] rounded-t-[50px] 
+      className="mt-20 pb-10 w-full bg-black md:rounded-t-[100px] 
+      rounded-t-[50px] 
     text-white font-sans "
     >
-      <footer className="flex md:flex-row flex-col md:pt-20 pt-10 px-[4%] relative">
+      <footer className="flex md:flex-row flex-col md:pt-20 pt-10 
+      px-[4%] relative">
         <div className="w-[20%] p-4">
           <List
             title="FEATURES"

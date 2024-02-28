@@ -51,8 +51,8 @@ export default function HomeFisrCompo() {
           </SlideUpComponent>
         </div>
       </div>
-      <div className="m-[26px] p-[24px] text-gray-500 text-center font-sans mb-12">
-          <SlideUpComponent delay={6}>
+      <div className="p-[24px] text-gray-500 text-center font-sans mb-12">
+          <SlideUpComponent >
             +10K companies scaled up with VideoAsk
           </SlideUpComponent>
         </div>

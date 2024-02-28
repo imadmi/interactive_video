@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id               Int       @id @default(autoincrement())
-  email            String    @unique
+  id               Int          @id @default(autoincrement())
+  email            String       @unique
   password         String
   name             String?
   videos           VideoAsk[]
-  creationDate     DateTime  @default(now())
+  creationDate     DateTime     @default(now())
 }
 
 model VideoAsk {
@@ -27,13 +27,13 @@ model VideoAsk {
   questions          Question[]
   userId             Int?
   user               User?       @relation(fields: [userId], references: [id])
-  creationDate     DateTime  @default(now())
+  creationDate       DateTime    @default(now())
 }
 
 model Question {
-  id                 Int        @id @default(autoincrement())
+  id                 Int         @id @default(autoincrement())
   question           String
   next_video_id      String?
   videoAskId         String
-  videoAsk           VideoAsk   @relation(fields: [videoAskId], references: [id])
+  videoAsk           VideoAsk    @relation(fields: [videoAskId], references: [id])
 }

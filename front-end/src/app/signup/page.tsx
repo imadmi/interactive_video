@@ -8,8 +8,6 @@ import logo from "../../../public/logo.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-
-
 const Signup = () => {
   const router = useRouter();
 
@@ -92,7 +90,7 @@ const Signup = () => {
 
 			const data = await res.json();
 			if (data.succes === true) {
-				return router.push(`/dashboard`);
+				return router.push(`/get-started`);
 			} else if (data.succes === false) {
 				seterrormsg(data.message);
 			}
@@ -102,12 +100,14 @@ const Signup = () => {
 	};
 
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center font-sans bg-slate-50">
+    <div className="relative w-screen h-screen flex items-center 
+    justify-center font-sans bg-slate-50">
       <div className="absolute right-0 top-0 p-8">
         Already have an account? &nbsp;
         <Link
           href="/login"
-          className="bg-black px-4 py-2 rounded-full text-white hover:px-[17px] hover:py-[9px]"
+          className="bg-black px-4 py-2 rounded-full text-white 
+          hover:px-[17px] hover:py-[9px]"
         >
           Log in
         </Link>
@@ -125,7 +125,8 @@ const Signup = () => {
               <input
                 type="text"
                 id="name"
-                className="form-input w-full bg-slate-50 focus:outline-none border-b border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2"
+                className="form-input w-full bg-slate-50 focus:outline-none 
+                border-b border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2"
                 placeholder="Your name"
                 onChange={(e) => setname(e.target.value)}
               />
@@ -135,7 +136,8 @@ const Signup = () => {
               <input
                 type="text"
                 id="email"
-                className="form-input w-full bg-slate-50 focus:outline-none border-b border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2"
+                className="form-input w-full bg-slate-50 focus:outline-none border-b 
+                border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2"
                 placeholder="Your e-mail"
                 onChange={(e) => setemail(e.target.value)}
               />
@@ -145,7 +147,8 @@ const Signup = () => {
               <input
                 type="password"
                 id="password"
-                className="z-10 form-input w-full bg-slate-50 focus:outline-none border-b border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2 mb-6"
+                className="z-10 form-input w-full bg-slate-50 focus:outline-none border-b 
+                border-gray-300 focus:border-b-green-400 focus:shadow-outline pb-2 mb-6"
                 placeholder="Your password"
                 onFocus={() => setInPassword(true)}
                 onChange={(e) => {
@@ -286,7 +289,8 @@ const Signup = () => {
 
 
             <button
-              className={`bg-violet-800 text-white rounded-md px-4 py-3 w-full mt-4 hover:py-[13px] ${
+              className={`bg-violet-800 text-white rounded-md px-4 py-3 w-full 
+              mt-4 hover:py-[13px] ${
                 name.length > 0 &&
                 email.length > 0 &&
                 password.length > 0 &&

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiMinus } from "react-icons/fi";
 import SlideUpComponent from "./SlideUpComponent";
 
-type HowToBuildcardProps = {
+type CardProps = {
   isVisible: boolean;
   card: {
     title: string;
@@ -89,7 +89,7 @@ const HowToBuild = () => {
                   </div>
                 )}
                 {cardtoshow === 0 && (
-                  <HowToBuildcard
+                  <Card
                     isVisible={cardtoshow === 0}
                     card={cards[0]}
                     url="/videos/howtobuild.mp4"
@@ -115,7 +115,7 @@ const HowToBuild = () => {
                   </div>
                 )}
                 {cardtoshow === 1 && (
-                  <HowToBuildcard
+                  <Card
                     isVisible={cardtoshow === 1}
                     card={cards[1]}
                     url="/videos/howtobuild1.mp4"
@@ -141,7 +141,7 @@ const HowToBuild = () => {
                   </div>
                 )}
                 {cardtoshow === 2 && (
-                  <HowToBuildcard
+                  <Card
                     isVisible={cardtoshow === 2}
                     card={cards[2]}
                     url="/videos/howtobuild2.mp4"
@@ -167,7 +167,7 @@ const HowToBuild = () => {
                   </div>
                 )}
                 {cardtoshow === 3 && (
-                  <HowToBuildcard
+                  <Card
                     isVisible={cardtoshow === 3}
                     card={cards[3]}
                     url="/videos/howtobuild3.mp4"
@@ -193,7 +193,7 @@ const HowToBuild = () => {
                   </div>
                 )}
                 {cardtoshow === 4 && (
-                  <HowToBuildcard
+                  <Card
                     isVisible={cardtoshow === 4}
                     card={cards[4]}
                     url="/videos/howtobuild4.mp4"
@@ -219,7 +219,7 @@ const HowToBuild = () => {
   );
 };
 
-const HowToBuildcard = ({ isVisible, card, url }: HowToBuildcardProps) => {
+const Card = ({ isVisible, card, url }: CardProps) => {
   return (
     <div>
       <AnimatePresence>
@@ -228,9 +228,10 @@ const HowToBuildcard = ({ isVisible, card, url }: HowToBuildcardProps) => {
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-white text-black font-sans p-4 rounded-3xl w-full my-2 sm:px-10"
-          >
-            <div className="text-lg text-start font-semibold my-2 sm:-translate-x-5">
+            className="bg-white text-black font-sans p-4 rounded-3xl 
+            w-full my-2 sm:px-10">
+            <div className="text-lg text-start font-semibold my-2 
+            sm:-translate-x-5">
               <FiMinus className="hidden sm:inline mb-1 mr-2" />
               {card.title}
             </div>

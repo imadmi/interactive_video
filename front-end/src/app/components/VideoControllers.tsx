@@ -130,7 +130,7 @@ const VideoControls = ({
             className="text-white font-sans font-semibold text-md flex items-center 
           justify-center h-7 w-auto"
           >
-            {formatTime(videoRef.current?.currentTime)} /{" "}
+            {formatTime(videoRef.current?.currentTime)} /
             {formatTime(videoRef.current?.duration)}
           </div>
         </motion.div>

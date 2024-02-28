@@ -5,9 +5,11 @@ import { User, useAppContext } from "../AppContext";
 import Logo from "./Logo";
 import NavbarList from "./NavbarList";
 import NavbarUser from "./NavbarUser";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const context = useAppContext();
+  const path = usePathname();
   const Ref = useRef<HTMLElement>(null);
   const Ref1 = useRef<HTMLElement>(null);
   const Ref2 = useRef<HTMLElement>(null);
@@ -55,7 +57,7 @@ const Navbar = () => {
       }
     };
     checkJwtCookie();
-  }, []);
+  }, [path]);
 
   return (
     <>

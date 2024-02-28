@@ -1,7 +1,7 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useAppContext } from "../AppContext";
 import UploadVideo from "../components/UploadVideo";
 import { FaAnglesDown } from "react-icons/fa6";
@@ -164,7 +164,10 @@ const VideoUploadForm = () => {
                       name="id"
                       value={videoAsk.id}
                       onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                      className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
+                      className="border-gray-500  bg-slate-100 bg-opacity-10 
+                      placeholder-gray-800 appearance-none border rounded w-full 
+                      py-2 px-3 text-black leading-tight focus:outline-none 
+                      focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
                     <label
                       className="block text-sm font-sans text-gray-700 mb-2"
@@ -177,7 +180,10 @@ const VideoUploadForm = () => {
                       name="title"
                       value={videoAsk.title}
                       onChange={(e) => handleVideoAskChange(videoAskIndex, e)}
-                      className="border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
+                      className="border-gray-500  bg-slate-100 bg-opacity-10 
+                      placeholder-gray-800 appearance-none border rounded w-full 
+                      py-2 px-3 text-black leading-tight focus:outline-none 
+                      focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
                   </>
                 )}
@@ -211,7 +217,11 @@ const VideoUploadForm = () => {
                             )
                           }
                           placeholder="Question"
-                          className=" placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2 mr-2"
+                          className=" placeholder:text-sm placeholder:text-gray-400 
+                          border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 
+                          appearance-none border rounded w-full py-2 px-3 text-black 
+                          leading-tight focus:outline-none focus:border-2 focus:border-green-400 
+                          focus:-outline mb-2 mr-2"
                         />
                         <input
                           type="text"
@@ -225,7 +235,11 @@ const VideoUploadForm = () => {
                             )
                           }
                           placeholder="Next Video ID"
-                          className="placeholder:text-sm placeholder:text-gray-400 border-gray-500  bg-slate-100 bg-opacity-10 placeholder-gray-800 appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-2 focus:border-green-400 focus:-outline mb-2"
+                          className="placeholder:text-sm placeholder:text-gray-400 
+                          border-gray-500  bg-slate-100 bg-opacity-10 
+                          placeholder-gray-800 appearance-none border rounded w-full 
+                          py-2 px-3 text-black leading-tight focus:outline-none 
+                          focus:border-2 focus:border-green-400 focus:-outline mb-2"
                         />
                         <button
                           type="button"
@@ -251,14 +265,19 @@ const VideoUploadForm = () => {
                     <button
                       type="button"
                       onClick={() => addQuestion(videoAskIndex)}
-                      className="inline-flex items-center px-2 sm:px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+                      className="inline-flex items-center px-2 sm:px-4 py-2 border 
+                      border-transparent rounded-md  text-sm font-sans text-white 
+                      bg-indigo-600 hover:bg-indigo-700 focus:outline-none 
+                      focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
                     >
                       Add question
                     </button>
                     <button
                       type="button"
                       onClick={() => removeVideoAsk(videoAskIndex)}
-                      className="hover:bg-red-100 hover:border-red-400 inline-flex items-center px-2 sm:px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+                      className="hover:bg-red-100 hover:border-red-400 inline-flex 
+                      items-center px-2 sm:px-4 py-2 border rounded-md text-sm font-sans 
+                      border-gray-300 text-black"
                     >
                       Delete VideoAsk
                     </button>
@@ -269,7 +288,9 @@ const VideoUploadForm = () => {
                           context.setVideoaskIndex(videoAskIndex);
                           context.setisModalOpen(true);
                         }}
-                        className="hover:bg-green-100 hover:border-green-400 inline-flex items-center px-2 sm:px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+                        className="hover:bg-green-100 hover:border-green-400 inline-flex 
+                        items-center px-2 sm:px-4 py-2 border rounded-md text-sm font-sans 
+                        border-gray-300 text-black"
                       >
                         Upload Video
                       </button>
@@ -287,7 +308,8 @@ const VideoUploadForm = () => {
                 context.setisModalOpen(true);
                 context.setVideoaskIndex(context.videoAsks.length);
               }}
-              className="w-40 text-center hover:bg-green-100 hover:border-green-400 items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
+              className="w-40 text-center hover:bg-green-100 hover:border-green-400 
+              items-center px-4 py-2 border rounded-md text-sm font-sans border-gray-300 text-black"
             >
               Add VideoAsk
             </button>
@@ -295,7 +317,9 @@ const VideoUploadForm = () => {
           <div className="flex justify-center mb-5">
             <button
               onClick={handleSubmit}
-              className="mb-5 w-40 text-center items-center px-4 py-2 border border-transparent rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
+              className="mb-5 w-40 text-center items-center px-4 py-2 border border-transparent 
+              rounded-md  text-sm font-sans text-white bg-indigo-600 hover:bg-indigo-700 
+              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
             >
               Submit
             </button>

@@ -156,7 +156,8 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="w-screen h-screen flex flex-col items-center 
+    justify-center bg-gray-100">
       <PauseComponent
         togglePlayPause={togglePlayPause}
         buttonLink={buttonLink}

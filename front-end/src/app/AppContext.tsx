@@ -96,14 +96,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isDropsOpen, setDropOpen] = useState(0);
   const [isDropsOpenModal, setDropOpenModal] = useState(0);
   const [isNavbarModalOpen, setNavbarModalOpen] = useState(false);
-  const [myVideoAsks, setMyVideoAsks] = useState<MyVideoAsk[]>([
-    {
-      id: "",
-      title: "",
-      url: "",
-      creationDate: "",
-    },
-  ]);
+  const [myVideoAsks, setMyVideoAsks] = useState<MyVideoAsk[]>([]);
 
   const contextValue: AppContextProps = {
     UpdatedCurrentTime,

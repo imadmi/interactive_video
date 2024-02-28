@@ -1,9 +1,8 @@
 import React from "react";
 import { MdCloudUpload } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useAppContext } from "../AppContext";
-import SlideUpComponent from "./SlideUpComponent";
 
 export default function UploadVideo() {
   const context = useAppContext();

@@ -195,13 +195,15 @@ export class UsersService {
     }
   }
 
-  getVideoAsksByUser(userId: number) {
+  async getVideoAsksByUser(userId: number) {
     try {
-      return prisma.videoAsk.findMany({
+       
+      const myvideos = await prisma.videoAsk.findMany({
         where: {
           userId,
         },
       });
+      return myvideos;
     } catch (e) {
       return null;
     }

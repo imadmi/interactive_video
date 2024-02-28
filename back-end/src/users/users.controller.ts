@@ -1,17 +1,8 @@
 import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { VideoAsk } from './types';
 
-export type VideoAsk = {
-  id: string;
-  title: string;
-  url: string;
-  questions: Qsts[];
-};
 
-export type Qsts = {
-  question: string;
-  next_video_id: string | null;
-};
 
 @Controller('')
 export class UsersController {
@@ -54,16 +45,22 @@ export class UsersController {
 	}
 
   @Get('myVideoAsks')
-  myVideoAsks(@Req() req: any, @Res() res: any) {
-    const cookie = req.cookies;
-    const user = this.UsersService.getUserFromCookie(cookie);
-    if (user === null) {
-			return res.json({ succes: false });
+  async myVideoAsks(@Req() req: any, @Res() res: any) {
+    try{
+
+      const cookie = req.cookies;
+      const user = this.UsersService.getUserFromCookie(cookie);
+      if (user === null) {
+        return res.json({ succes: false });
+      }
+      const myVideoAsks = await this.UsersService.getVideoAsksByUser(user.id);
+      if (myVideoAsks === null) {
+        return res.json({ succes: false });
+      }
+      return res.json({ succes: true, myVideoAsks });
     }
-    const myVideoAsks = this.UsersService.getVideoAsksByUser(user.id);
-    if (myVideoAsks === null) {
+    catch (e) {
       return res.json({ succes: false });
     }
-    return res.json({ succes: true, myVideoAsks });
   }
 }

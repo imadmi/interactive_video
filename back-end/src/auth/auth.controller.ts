@@ -29,7 +29,7 @@ export class AuthController {
       res.cookie('jwt', jwt);
       return res.json({ succes: true, message: 'User created' });
     } catch (e) {
-      return res.json({ succes: false, message: 'User created' });
+      return res.json({ succes: false, message: 'Error while Signup' });
     }
   }
 
@@ -51,18 +51,18 @@ export class AuthController {
         return res.json({ succes: true, message: 'redirect to dashboard' });
       }
     } catch (e) {
-      return res.json({ succes: false, message: 'User do not exist' });
+      return res.json({ succes: false, message: 'Error while Login' });
     }
   }
 
   @Get('logout')
-	async logout(@Res() res: any) {
-		try {
-			res.clearCookie('jwt');
-			res.redirect(`${URL}:3000`);
-			return 'logout';
-		} catch (e) {
-			console.log('Error logout: ', e);
-		}
-	}
+  async logout(@Res() res: any) {
+    try {
+      res.clearCookie('jwt');
+      res.redirect(`${URL}:3000`);
+      return 'logout';
+    } catch (e) {
+      console.log('Error logout: ', e);
+    }
+  }
 }
