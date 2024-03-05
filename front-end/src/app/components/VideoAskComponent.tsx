@@ -10,6 +10,7 @@ import PauseComponent from "../components/PauseComponent";
 import VideoControls from "../components/VideoControllers";
 import QuestionList from "../components/VideoQuestios";
 import { VideoAsk } from "../../app/get-started/types";
+import TitleComponent from "./TitleComponent";
 
 type VideoAskComponentProps = {
   mockData?: VideoAsk[];
@@ -156,20 +157,25 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center 
-    justify-center bg-gray-100">
+    <div
+      className="w-screen h-screen flex flex-col items-center 
+    justify-center bg-gray-100"
+    >
       <PauseComponent
         togglePlayPause={togglePlayPause}
         buttonLink={buttonLink}
       />
+
       <div
         className={`relative  ${
           context.isFullscrean
             ? "w-screen h-screen"
-            : "mx-[10%] h-[60%]  w-[80%] rounded-3xl lg:flex-row"
+            : "mx-0 sm:mx-[10%] h-full sm:h-[60%]  w-full sm:w-[80%] sm:rounded-3xl lg:flex-row"
         }  overflow-hidden  flex items-center bg-black lg:bg-white `}
         onClick={togglePlayPause}
       >
+        <TitleComponent />
+
         <div
           className={`lg:relative lg:h-full ${
             context.isFullscrean ? "w-full" : "lg:w-1/2"
@@ -186,7 +192,7 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
             className={`${
               context.isFullscrean
                 ? "w-screen h-screen flex items-center justify-center"
-                : "w-[80vw] lg:w-[60vw] auto"
+                : "w-full lg:w-[60vw] auto"
             }`}
             style={{
               animation: context.animate ? "swipeUp 0.3s ease-in forwards" : ``,

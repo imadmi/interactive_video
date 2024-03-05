@@ -5,6 +5,7 @@ import VideoAskComponent from "@/app/components/VideoAskComponent";
 import { VideoAsk } from "@/app/get-started/types";
 import { use, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { mockData } from "@/app/get-started/mockData";
 
 const Page = (param: any) => {
   const context = useAppContext();
@@ -33,13 +34,18 @@ const Page = (param: any) => {
         if (nextVideo !== undefined) {
           context.setvideoAsk(nextVideo);
         } else {
-          toast.error("Video with the specified ID was not found.");
+          // toast.error("Video with the specified ID was not found.", {
+          //   id: "404video",
+          // });
         }
 
         context.setVideoAsks(data);
       } catch (error) {
-        const message = "An error occurred while fetching the data." + error;
-        toast.error(message);
+        // const message = "An error occurred while fetching the data." + error;
+        // toast.error(message
+        // , {
+        //   id: "fetching",
+        // });
         console.error("Fetchingerror:", error);
       }
     };
@@ -50,7 +56,8 @@ const Page = (param: any) => {
   return (
     <div className="">
       <VideoAskComponent
-        mockData={context.videoAsks}
+        // mockData={context.videoAsks}
+        mockData={mockData}
         routedTo="/dashboard"
         // buttonLink="/dashboard"
       />

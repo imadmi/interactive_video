@@ -8,6 +8,21 @@ const QuestionList = ({
 }: any) => {
   const context = useAppContext();
 
+  const handleClickingQST = (
+    event: any,
+    next_video_id: string | null,
+    index: number
+  ) => {
+    event.stopPropagation();
+    handleQuestionClick(next_video_id);
+    context.setIsPaused(false);
+    toggleAnimation();
+    triggerBlink();
+    context.setClickedButtonIndex(index);
+    context.setUpdatedCurrentTime(0);
+    context.setPlaybackSpeed(1);
+  };
+
   return (
     <div
       className={`${
@@ -23,9 +38,7 @@ const QuestionList = ({
           className="font-thin font-sans mb-3 lg:font-normal text-gray-300
        lg:text-gray-700 text-md lg:mb-3"
         >
-          {context.videoAsk && context.videoAsk.title && (
-            <>{context.videoAsk.title}</>
-          )}
+          Choose 1 of {context.videoAsk.questions.length} options
         </h3>
         {context.videoAsk && context.videoAsk.questions && (
           <>
@@ -37,16 +50,19 @@ const QuestionList = ({
             hover:border-opacity-100 hover:border-violet-600 text-white py-2 
             px-4 rounded-full font-semibold font-sans"
                 key={index}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleQuestionClick(question.next_video_id);
-                  context.setIsPaused(false);
-                  toggleAnimation();
-                  triggerBlink();
-                  context.setClickedButtonIndex(index);
-                  context.setUpdatedCurrentTime(0);
-                  context.setPlaybackSpeed(1);
-                }}
+                // onClick={(event) => {
+                //   event.stopPropagation();
+                //   handleQuestionClick(question.next_video_id);
+                //   context.setIsPaused(false);
+                //   toggleAnimation();
+                //   triggerBlink();
+                //   context.setClickedButtonIndex(index);
+                //   context.setUpdatedCurrentTime(0);
+                //   context.setPlaybackSpeed(1);
+                // }}
+                onClick={(e) =>
+                  handleClickingQST(e, question.next_video_id, index)
+                }
                 style={{
                   animation:
                     context.blink && context.clickedButtonIndex === index

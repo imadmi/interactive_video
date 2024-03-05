@@ -37,10 +37,16 @@ const VideoPlayerProgress = ({ progress }: { progress: number }) => {
       clickRatio =
         (event.clientX - context.screenWidth * 0.1) /
         (context.screenWidth - context.screenWidth * 0.6);
-    } else if (context.isFullscrean === false && context.screenWidth <= 1024) {
+    } else if (
+      context.isFullscrean === false &&
+      context.screenWidth <= 1024 &&
+      context.screenWidth > 640
+    ) {
       clickRatio =
         (event.clientX - context.screenWidth * 0.1) /
         (context.screenWidth - context.screenWidth * 0.2);
+    } else if (context.isFullscrean === false && context.screenWidth <= 640) {
+      clickRatio = event.clientX / context.screenWidth;
     }
     context.setUpdatedCurrentTime(clickRatio * context.videoDuration);
   };
@@ -57,10 +63,10 @@ const VideoPlayerProgress = ({ progress }: { progress: number }) => {
         />
         <button
           className={`${
-            context.isFullscrean ? "hidden" : "hidden lg:block"
+            context.isFullscrean ? "hidden" : "block sm:hidden"
           }   absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-75 z-10`}
           style={{
-            width: `${Math.floor(progress * context.screenWidth * 0.4)}px`,
+            width: `${Math.floor(progress * context.screenWidth)}px`,
           }}
           onClick={(event) => {
             event.stopPropagation();
@@ -69,10 +75,22 @@ const VideoPlayerProgress = ({ progress }: { progress: number }) => {
         />
         <button
           className={` ${
-            context.isFullscrean ? "hidden" : "block"
-          } lg:hidden absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-75 z-10`}
+            context.isFullscrean ? "hidden" : "hidden sm:block lg:hidden"
+          } lg:hidden absolute top-0 left-0 h-2 hover:h-3 bg-violet-600 transition-all duration-75 z-10`}
           style={{
             width: `${Math.floor(progress * context.screenWidth * 0.8)}px`,
+          }}
+          onClick={(event) => {
+            event.stopPropagation();
+            ClickRatioFunc(event);
+          }}
+        />
+        <button
+          className={`${
+            context.isFullscrean ? "hidden" : "hidden lg:block"
+          }   absolute top-0 h-2 hover:h-3 bg-violet-600 transition-all duration-75 z-10`}
+          style={{
+            width: `${Math.floor(progress * context.screenWidth * 0.4)}px`,
           }}
           onClick={(event) => {
             event.stopPropagation();
@@ -93,6 +111,5 @@ const VideoPlayerProgress = ({ progress }: { progress: number }) => {
     </div>
   );
 };
-
 
 export default VideoPlayerProgress;
