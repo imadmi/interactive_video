@@ -232,7 +232,7 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
         <Link
           href={buttonLink}
           className={`bg-gray-900 px-6 py-4 rounded-xl mt-10 text-white ${
-            context.isFullscrean ? "hidden" : "block"
+            context.isFullscrean ? "hidden" : "hidden sm:block"
           } `}
         >
           <div className="inline-block font-semibold">Go to your Dashboard</div>

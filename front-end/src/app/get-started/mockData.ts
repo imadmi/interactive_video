@@ -3,7 +3,7 @@ import { VideoAsk } from "./types";
 const mockData: VideoAsk[] = [
   {
     id: "video1",
-    title: "Choose 1 of 5 options",
+    title: "This is the title 1",
     url: "/videos/video1.mp4",
     questions: [
       {
@@ -31,7 +31,7 @@ const mockData: VideoAsk[] = [
 
   {
     id: "video2",
-    title: "Choose 1 of 4 options",
+    title: "This is the title 2",
     url: "/videos/video2.mp4",
     questions: [
       {
@@ -55,7 +55,7 @@ const mockData: VideoAsk[] = [
 
   {
     id: "video3",
-    title: "Choose 1 of 4 options",
+    title: "This is the title 3",
     url: "/videos/video3.mp4",
     questions: [
       {
@@ -79,7 +79,7 @@ const mockData: VideoAsk[] = [
 
   {
     id: "video4",
-    title: "Choose 1 of 4 options",
+    title: "This is the title 4",
     url: "/videos/video4.mp4",
     questions: [
       {
@@ -103,7 +103,7 @@ const mockData: VideoAsk[] = [
 
   {
     id: "video5",
-    title: "Choose 1 of 4 options",
+    title: "This is the title 5",
     url: "/videos/video5.mp4",
     questions: [
       {

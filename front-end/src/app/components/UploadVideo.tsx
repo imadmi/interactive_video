@@ -41,6 +41,18 @@ export default function UploadVideo() {
     }
   };
 
+  const handleDragOver = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: any) => {
+    e.preventDefault();
+    if (e.dataTransfer.items[0].kind === "file") {
+      const file = e.dataTransfer.items[0].getAsFile();
+      handelUpload(e, file);
+    }
+  };
+
   return (
     <div>
       <div
@@ -58,8 +70,8 @@ export default function UploadVideo() {
           <div
             className="border-dashed border-4 m-4 h-[80%] border-gray-300 rounded-[40px]
                     flex flex-col items-center justify-center space-y-2"
-            // onDragOver={handleDragOver}
-            // onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
           >
             <MdCloudUpload className="text-cyan-400" size="60" />
             <div className=" text-xl font-sans">Drag a video to upload</div>

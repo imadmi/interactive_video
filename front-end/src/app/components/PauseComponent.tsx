@@ -14,7 +14,7 @@ const PauseComponent = ({ togglePlayPause, buttonLink }: any) => {
           className={`absolute ${
             context.isFullscrean
               ? " top-[46%] "
-              : " top-[40%] lg:top-[42%] lg:-translate-x-[20vw]"
+              : " top-[46%] sm:top-[42%] lg:-translate-x-[20vw]"
           } 
           ${buttonLink === undefined ? " top-[46%] " : ""}
           z-10 rounded-full shadow-black shadow-2xl cursor-pointer`}

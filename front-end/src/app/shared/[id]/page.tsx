@@ -34,9 +34,9 @@ const Page = (param: any) => {
         if (nextVideo !== undefined) {
           context.setvideoAsk(nextVideo);
         } else {
-          // toast.error("Video with the specified ID was not found.", {
-          //   id: "404video",
-          // });
+          toast.error("Video with the specified ID was not found.", {
+            id: "404video",
+          });
         }
 
         context.setVideoAsks(data);
@@ -49,19 +49,13 @@ const Page = (param: any) => {
         console.error("Fetchingerror:", error);
       }
     };
-
     fetchData();
   }, []);
 
   return (
-    <div className="">
-      <VideoAskComponent
-        // mockData={context.videoAsks}
-        mockData={mockData}
-        routedTo="/dashboard"
-        // buttonLink="/dashboard"
-      />
-    </div>
+    <>
+      <VideoAskComponent mockData={context.videoAsks} routedTo="/dashboard" />
+    </>
   );
 };
 

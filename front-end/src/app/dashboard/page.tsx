@@ -90,9 +90,8 @@ const VideoUploadForm = () => {
       }
     );
     const data = await res.json();
-    if (res.ok) {
-      toast.success("VideoAsk created successfully");
-    }
+
+    
     if (data.success) {
       toast.success("VideoAsk created successfully");
     } else if (data.error) {
@@ -169,9 +168,7 @@ const VideoUploadForm = () => {
                       py-2 px-3 text-black leading-tight focus:outline-none 
                       focus:border-2 focus:border-green-400 focus:-outline mb-2"
                     />
-                    <label
-                      className="block text-sm font-sans text-gray-700 mb-2"
-                    >
+                    <label className="block text-sm font-sans text-gray-700 mb-2">
                       Video Title:
                     </label>
                     <input

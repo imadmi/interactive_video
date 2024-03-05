@@ -24,6 +24,9 @@ export class UsersService {
 
   async importVideoAsks(data: VideoAsk[], userId: number | null) {
     try {
+      if (userId === null) {
+        return { success: false };
+      }
       const videoAsks = await prisma.videoAsk.findMany({
         where: {
           id: {
@@ -197,7 +200,6 @@ export class UsersService {
 
   async getVideoAsksByUser(userId: number) {
     try {
-       
       const myvideos = await prisma.videoAsk.findMany({
         where: {
           userId,
