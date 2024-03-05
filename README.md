@@ -10,7 +10,7 @@ To set up the VideoAsk project locally, follow these steps:
 ### If you have docker installed
 Clone the repository and run docker compose at the root of the repository :
 ``` bash
-git clone https://github.com/imadmi/interactive_video.git && cd interactive_video && docker-compose up --build
+git clone https://github.com/imadmi/interactive_video.git && cd interactive_video && docker compose up --build
 ```
 
 ### If you do not have docker installed
@@ -83,12 +83,12 @@ For safely storing user data, including passwords, I used bcrypt. Bcrypt is a pa
 ### What kind of database should I use, and why? Should I choose a relational or non-relational (NoSQL) database?
 
 ```
-I chose a relational database because the app involved—users, videos, and questions—are inter-related. Using a non-relational database would significantly complicate, if not make impossible, the management of these relationships. Relational databases are particularly suited for this task because they allow for the efficient storage and retrieval of data that is interconnected through relationships, such as foreign keys. This feature is crucial for this application, as it enables us to easily query and manipulate vidoAsks, questions and users.
+I chose a relational database because the app involves users, videos, and questions inter-related. Using a non-relational database would significantly complicate, if not make impossible, the management of these relationships. Relational databases are particularly suited for this task because they allow for the efficient storage and retrieval of data that is interconnected through relationships, such as foreign keys. This feature is crucial for this application, as it enables us to easily query and manipulate vidoAsks, questions and users.
 ```
 
 ### How can I create the beautiful animation for the website?
 ```
-I created the beautiful animations for a website using Framer Motion library for React
+I created the animations for a website using Framer Motion library for React
 ```
 
 ### What about the styling, and how you made the website responsive?

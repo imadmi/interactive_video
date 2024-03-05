@@ -71,14 +71,14 @@ export default function HomeSecondCompo() {
       </SlideUpComponent>
       <SlideUpComponent>
         <VideoHomeCard
-          videoSrc="/videos/homeVideo.mp4"
+          videoSrc="/videos/homeVideo3.mp4"
           title="Gather better data with video forms"
           details="Collecting data has never been easier. Video forms let you 
       collect valuable contact details and feedback in an engaging, 
       interactive, and personal way."
           linkto="See how"
           order={false}
-        />{" "}
+        />
       </SlideUpComponent>
       <SlideUpComponent>
         <VideoHomeCard
@@ -88,7 +88,7 @@ export default function HomeSecondCompo() {
       Async interviews let you enhance the candidate experience at scale."
           linkto="Lear more"
           order={true}
-        />{" "}
+        />
       </SlideUpComponent>
       <SlideUpComponent>
         <VideoHomeCard
