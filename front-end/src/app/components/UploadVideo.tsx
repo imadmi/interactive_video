@@ -15,26 +15,42 @@ export default function UploadVideo() {
       const data = new FormData();
       data.set("file", Videofile);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
+      // const res = await fetch("/api/upload", {
+      //   method: "POST",
+      //   body: data,
+      // });
 
-      const resData = await res.json();
-      if (!res.ok) return "";
-
-      if (resData && resData.success) {
-        context.setisModalOpen(false);
-        const newVideoAsk = [...context.videoAsks];
-        if ("url" in newVideoAsk[context.VideoaskIndex]) {
-          newVideoAsk[context.VideoaskIndex].url = resData.path;
-          context.setVideoAsks(newVideoAsk);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}:3001/uploadVideo`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: data,
         }
-        return resData.path;
-      } else {
-        toast.error("Failed to upload video");
+      );
+
+      // const resData = await res.json();
+      if (res.ok) {
+        console.log("res ok");
         return "";
       }
+      if (!res.ok) {
+        console.log("res  NOT ok");
+        return "";
+      }
+
+      // if (resData && resData.success) {
+      //   context.setisModalOpen(false);
+      //   const newVideoAsk = [...context.videoAsks];
+      //   if ("url" in newVideoAsk[context.VideoaskIndex]) {
+      //     newVideoAsk[context.VideoaskIndex].url = resData.path;
+      //     context.setVideoAsks(newVideoAsk);
+      //   }
+      //   return resData.path;
+      // } else {
+      //   toast.error("Failed to upload video");
+      //   return "";
+      // }
     } catch (e: any) {
       toast.error("Failed to upload video" + e);
       return "";
@@ -70,8 +86,8 @@ export default function UploadVideo() {
           <div
             className="border-dashed border-4 m-4 h-[80%] border-gray-300 rounded-[40px]
                     flex flex-col items-center justify-center space-y-2"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
+            // onDragOver={handleDragOver}
+            // onDrop={handleDrop}
           >
             <MdCloudUpload className="text-cyan-400" size="60" />
             <div className=" text-xl font-sans">Drag a video to upload</div>
