@@ -178,7 +178,7 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
 
         <div
           className={`lg:relative lg:h-full ${
-            context.isFullscrean ? "w-full" : "lg:w-1/2"
+            context.isFullscrean ? "w-full" : "max-w-full lg:w-1/2"
           }  bg-gray-950 flex items-center justify-center`}
         >
           <VideoControls
@@ -192,8 +192,8 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
             className={`${
               context.isFullscrean
                 ? "w-screen h-screen flex items-center justify-center"
-                : "w-full lg:w-[60vw] auto"
-            }`}
+                : "sm:w-auto lg:w-[60vw]"
+            } flex items-center justify-center `}
             style={{
               animation: context.animate ? "swipeUp 0.3s ease-in forwards" : ``,
             }}
@@ -206,16 +206,9 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
                 loop
                 muted={context.isMuted}
                 autoPlay
-                className="h-full w-auto"
+                className="h-screen sm:h-full w-screen sm:w-full object-cover overflow-hidden"
               >
                 <source src={context.videoAsk.url} />
-                <track
-                  src="/subtitles/captions.vtt"
-                  kind="subtitles"
-                  srcLang="en"
-                  label="English"
-                  className=""
-                />
                 Your browser does not support the video tag.
               </video>
             )}

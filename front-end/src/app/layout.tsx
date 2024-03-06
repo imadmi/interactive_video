@@ -20,8 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         
-          <main className="relative flex flex-col min-h-screen">
-            <div className="flex-grow flex-1">{children}</div>
+          <main className="relative flex flex-col min-h-screen max-h-screen">
+            <div className="flex-grow flex-1 bg-red-500">{children}</div>
           </main>
           <Toaster />
       </body>

@@ -29,28 +29,25 @@ export default function UploadVideo() {
         }
       );
 
-      // const resData = await res.json();
-      if (res.ok) {
-        console.log("res ok");
-        return "";
-      }
+      const resData = await res.json();
+
       if (!res.ok) {
-        console.log("res  NOT ok");
+        toast.error("Failed to upload the video");
         return "";
       }
 
-      // if (resData && resData.success) {
-      //   context.setisModalOpen(false);
-      //   const newVideoAsk = [...context.videoAsks];
-      //   if ("url" in newVideoAsk[context.VideoaskIndex]) {
-      //     newVideoAsk[context.VideoaskIndex].url = resData.path;
-      //     context.setVideoAsks(newVideoAsk);
-      //   }
-      //   return resData.path;
-      // } else {
-      //   toast.error("Failed to upload video");
-      //   return "";
-      // }
+      if (resData && resData.success) {
+        context.setisModalOpen(false);
+        const newVideoAsk = [...context.videoAsks];
+        if ("url" in newVideoAsk[context.VideoaskIndex]) {
+          newVideoAsk[context.VideoaskIndex].url = resData.path;
+          context.setVideoAsks(newVideoAsk);
+        }
+        return resData.path;
+      } else {
+        toast.error("Failed to upload video");
+        return "";
+      }
     } catch (e: any) {
       toast.error("Failed to upload video" + e);
       return "";

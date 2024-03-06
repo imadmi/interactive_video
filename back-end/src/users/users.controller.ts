@@ -12,7 +12,6 @@ import {
 import { UsersService } from './users.service';
 import { VideoAsk } from './types';
 import { FileInterceptor } from '@nestjs/platform-express';
-import * as multerGoogleStorage from 'multer-google-storage';
 import { Storage } from '@google-cloud/storage';
 import { join } from 'path';
 
@@ -82,7 +81,6 @@ export class UsersController {
   ) {
     try {
       const gcBucketFile = join(__dirname, '../..', 'gcpBucketVideos.json');
-
       const storage = new Storage({
         projectId: 'annarabic',
         keyFilename: gcBucketFile,
@@ -104,15 +102,13 @@ export class UsersController {
           blobStream.on('finish', () => {
             const publicUrl = `https://storage.googleapis.com/\
 ${bucketName}/${destinationBlobName}`;
-            console.log(publicUrl);
             resolve(publicUrl);
           });
         });
       };
-
       const costumFileName = Date.now() + file.originalname;
-
       const path = await uploadBlob(file.buffer, costumFileName);
+
       return res.json({ success: true, path });
     } catch (error) {
       return res.json({ success: false, error: error });
