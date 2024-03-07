@@ -156,6 +156,25 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
     }, 500);
   };
 
+  const divRef = useRef<HTMLDivElement>(null);
+  const [divHeight, setDivHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (divRef.current) {
+      setDivHeight(divRef.current.offsetHeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (video) {
+      video.onloadedmetadata = () => {
+        context.setisVideoPortrait(video.videoHeight > video.videoWidth);
+      };
+    }
+  }, [context.videoAsk.url]);
+
   return (
     <div
       className="w-screen h-screen flex flex-col items-center 
@@ -171,12 +190,12 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
           context.isFullscrean
             ? "w-screen h-screen"
             : "mx-0 sm:mx-[10%] h-full sm:h-[60%]  w-full sm:w-[80%] sm:rounded-3xl lg:flex-row"
-        }  overflow-hidden  flex items-center bg-black lg:bg-white `}
+        }  overflow-hidden  flex justify-center items-center bg-black lg:bg-white `}
         onClick={togglePlayPause}
       >
         <TitleComponent />
-
         <div
+          ref={divRef}
           className={`lg:relative lg:h-full ${
             context.isFullscrean ? "w-full" : "max-w-full lg:w-1/2"
           }  bg-gray-950 flex items-center justify-center`}
@@ -190,10 +209,10 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
           />
           <div
             className={`${
-              context.isFullscrean
-                ? "w-screen h-screen flex items-center justify-center"
-                : "sm:w-auto lg:w-[60vw]"
-            } flex items-center justify-center `}
+              context.isFullscrean ? "w-screen h-screen" : "lg:w-[60vw]"
+            } flex items-center justify-center ${
+              context.isVideoPortrait ? "h-full w-auto" : "w-full sm:h-auto"
+            }`}
             style={{
               animation: context.animate ? "swipeUp 0.3s ease-in forwards" : ``,
             }}
@@ -206,7 +225,13 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
                 loop
                 muted={context.isMuted}
                 autoPlay
-                className="h-screen sm:h-full w-screen sm:w-full object-cover overflow-hidden"
+                className={`h-screen w-screen object-cover sm:object-contain 
+                ${
+                  context.isVideoPortrait
+                    ? `sm:h-[${divHeight}px] lg:h-full`
+                    : "sm:w-full sm:h-auto"
+                }
+                `}
               >
                 <source src={context.videoAsk.url} />
                 Your browser does not support the video tag.

@@ -3,6 +3,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 import SlideRightComponent from "./SlideRightComponent";
 import { useAppContext } from "../AppContext";
+import Link from "next/link";
 
 const Modal = () => {
   const context = useAppContext();
@@ -156,12 +157,13 @@ const Modal = () => {
             </SlideRightComponent>
           </li>
         </ul>
-        <button
+        <Link
+          href="/login"
           className="inline bg-gray-300 rounded-full px-4 py-2 
         mt-2 w-24"
         >
           Log in
-        </button>
+        </Link>
       </div>
     </div>
   );
