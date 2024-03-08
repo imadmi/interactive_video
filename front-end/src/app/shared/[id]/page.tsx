@@ -25,15 +25,25 @@ const Page = (param: any) => {
 
         if (!response.ok) {
           console.error("Fetching error:", response);
+          return;
         }
 
         const data: VideoAsk[] = await response.json();
-
+        
+        console.log('data', data);
+        
         const nextVideo = data.find((video) => video.id === param.params.id);
 
         if (nextVideo !== undefined) {
           context.setvideoAsk(nextVideo);
         } else {
+          const emptyVideoAsk = {
+            id: "",
+            title: "",
+            url: "",
+            questions: [],
+          };
+          context.setvideoAsk(emptyVideoAsk);
           toast.error("Video with the specified ID was not found.", {
             id: "404video",
           });
@@ -41,11 +51,10 @@ const Page = (param: any) => {
 
         context.setVideoAsks(data);
       } catch (error) {
-        // const message = "An error occurred while fetching the data." + error;
-        // toast.error(message
-        // , {
-        //   id: "fetching",
-        // });
+        const message = "An error occurred while fetching the data." + error;
+        toast.error(message, {
+          id: "fetching",
+        });
         console.error("Fetchingerror:", error);
       }
     };
@@ -54,7 +63,9 @@ const Page = (param: any) => {
 
   return (
     <>
-      <VideoAskComponent mockData={context.videoAsks} routedTo="/dashboard" />
+      <VideoAskComponent 
+      // mockData={context.videoAsks} 
+      routedTo="/dashboard" />
     </>
   );
 };

@@ -30,6 +30,7 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
   // Initializes the video player with the first video from the mockData array upon component mount or when mockData changes
   useEffect(() => {
     if (mockData) {
+      context.setVideoAsks(mockData);
       context.setvideoAsk(mockData[0]);
     }
   }, [mockData]);
@@ -38,12 +39,18 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
   const handleQuestionClick = async (nextVideoId: string | null) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    if (nextVideoId && mockData !== undefined && mockData.length > 0) {
-      const nextVideo = mockData.find((video) => video.id === nextVideoId);
-
-      if (nextVideo) {
+    if (nextVideoId && context.videoAsks !== undefined && context.videoAsks.length > 0) {
+      const nextVideo = context.videoAsks.find((video) => video.id === nextVideoId);
+      if (nextVideo !== undefined) {
         context.setvideoAsk(nextVideo);
       } else {
+        const emptyVideoAsk = {
+          id: "",
+          title: "",
+          url: "",
+          questions: [],
+        };
+        context.setvideoAsk(emptyVideoAsk);
         console.error("Video with the specified ID was not found.");
       }
     } else if (nextVideoId === null) {
@@ -225,11 +232,11 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
                 loop
                 muted={context.isMuted}
                 autoPlay
-                className={`h-screen w-screen object-cover sm:object-contain 
+                className={`h-screen w-screen 
                 ${
                   context.isVideoPortrait
-                    ? `sm:h-[${divHeight}px] lg:h-full`
-                    : "sm:w-full sm:h-auto"
+                    ? `lg:h-full object-cover sm:object-contain `
+                    : "sm:w-full sm:h-auto object-contain "
                 }
                 `}
               >

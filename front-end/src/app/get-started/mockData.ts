@@ -3,11 +3,11 @@ import { VideoAsk } from "./types";
 const mockData: VideoAsk[] = [
   {
     id: "video1",
-    title: "This is the title 1",
+    title: "This is the title 1 الْعَرَبِيَّة",
     url: "/videos/video1.mp4",
     questions: [
       {
-        question: "Creating a videoask",
+        question: "Creating a videoask الْعَرَبِيَّة",
         next_video_id: "video2",
       },
       {
@@ -39,7 +39,7 @@ const mockData: VideoAsk[] = [
         next_video_id: "video3",
       },
       {
-        question: "Managing your contacts",
+        question: "Managing your contacts الْعَرَبِيَّة",
         next_video_id: "video4",
       },
       {
@@ -67,7 +67,7 @@ const mockData: VideoAsk[] = [
         next_video_id: "video4",
       },
       {
-        question: "Account and org settings",
+        question: "Account and org settings  الْعَرَبِيَّة",
         next_video_id: "video5",
       },
       {
@@ -95,7 +95,7 @@ const mockData: VideoAsk[] = [
         next_video_id: "video5",
       },
       {
-        question: "I'm ready, go to my dashboard!",
+        question: "I'm ready, go to my dashboard!  الْعَرَبِيَّة",
         next_video_id: null,
       },
     ],
@@ -107,7 +107,7 @@ const mockData: VideoAsk[] = [
     url: "/videos/video5.mp4",
     questions: [
       {
-        question: "Creating a videoask",
+        question: "Creating a videoask  الْعَرَبِيَّة",
         next_video_id: "video2",
       },
       {

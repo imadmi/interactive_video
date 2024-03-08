@@ -12,6 +12,15 @@ export default function TitleComponent() {
     }
   }, [context.videoAsk.title]);
 
+  const [isTheqstInArabic, setisTheqstInArabic] = useState(false);
+
+  useEffect(() => {
+    if (context.videoAsk && context.videoAsk.title) {
+      const arabicLetterRegex = /[\u0600-\u06FF]/;
+      setisTheqstInArabic(arabicLetterRegex.test(context.videoAsk.title));
+    }
+  }, [context.videoAsk]);
+
   return (
     <>
       {istitleVisible && context.videoAsk.title && (
@@ -21,7 +30,11 @@ export default function TitleComponent() {
         "
           onClick={(e) => e.stopPropagation()}
         >
-          <div>
+          <div
+            className={`
+            ${isTheqstInArabic && "text-end"}
+          `}
+          >
             {context.videoAsk.title}
           </div>
           <IoMdClose

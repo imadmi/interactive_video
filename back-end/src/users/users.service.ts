@@ -25,8 +25,19 @@ export class UsersService {
   async importVideoAsks(data: VideoAsk[], userId: number | null) {
     try {
       if (userId === null) {
-        return { success: false };
+        return { success: false, error : 'Login first'};
       }
+
+      data = data.map((videoAsk) => {
+        const date = Date.now();
+        videoAsk.id = videoAsk.id + '-' + date;
+        videoAsk.questions = videoAsk.questions.map((q) => {
+          q.next_video_id = q.next_video_id + '-' + date;
+          return q;
+        });
+        return videoAsk;
+      });
+
       const videoAsks = await prisma.videoAsk.findMany({
         where: {
           id: {
@@ -34,8 +45,8 @@ export class UsersService {
           },
         },
       });
-      if (videoAsks.length) {
-        return { success: false };
+      if (videoAsks.length ) {
+        return { success: false, error : 'duplicated Ids' };
       }
 
       for (const [index, videoAsk] of data.entries()) {

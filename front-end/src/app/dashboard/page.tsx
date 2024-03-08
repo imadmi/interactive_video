@@ -89,13 +89,14 @@ const VideoUploadForm = () => {
         body: JSON.stringify(context.videoAsks),
       }
     );
+    console.log(context.videoAsks);
     const data = await res.json();
 
     
     if (data.success) {
       toast.success("VideoAsk created successfully");
     } else if (data.error) {
-      const msg = "Failed to create VideoAsk" + data.error;
+      const msg = "Failed to create VideoAsk :" + data.error;
       toast.error(msg);
     } else {
       toast.error("Failed to create VideoAsk");

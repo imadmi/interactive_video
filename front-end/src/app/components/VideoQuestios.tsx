@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "../AppContext";
 
 const QuestionList = ({
@@ -23,6 +23,19 @@ const QuestionList = ({
     context.setPlaybackSpeed(1);
   };
 
+  const [isTheqstInArabic, setisTheqstInArabic] = useState([false]);
+
+  useEffect(() => {
+    if (context.videoAsk && context.videoAsk.questions) {
+      setisTheqstInArabic(
+        context.videoAsk.questions.map((qst) => {
+          const arabicLetterRegex = /[\u0600-\u06FF]/;
+          return arabicLetterRegex.test(qst.question);
+        })
+      );
+    }
+  }, [context.videoAsk]);
+
   return (
     <div
       className={`${
@@ -44,22 +57,14 @@ const QuestionList = ({
           <>
             {context.videoAsk.questions.map((question, index) => (
               <button
-                className="flex flex-row items-center text-left lg:w-4/6 md:w-3/6 
+                className={`flex flex-row  items-center text-left lg:w-4/6 md:w-3/6 
             w-[90%] mb-2 lg:mb-3 p-3 bg-black bg-opacity-55 lg:text-black 
             lg:bg-opacity-10 lg:border border-2 border-gray-700 border-opacity-5 
             hover:border-opacity-100 hover:border-violet-600 text-white py-2 
-            px-4 rounded-full font-semibold font-sans"
+            px-4 rounded-full font-semibold font-sans
+            ${isTheqstInArabic[index] && "flex-row-reverse"}
+            `}
                 key={index}
-                // onClick={(event) => {
-                //   event.stopPropagation();
-                //   handleQuestionClick(question.next_video_id);
-                //   context.setIsPaused(false);
-                //   toggleAnimation();
-                //   triggerBlink();
-                //   context.setClickedButtonIndex(index);
-                //   context.setUpdatedCurrentTime(0);
-                //   context.setPlaybackSpeed(1);
-                // }}
                 onClick={(e) =>
                   handleClickingQST(e, question.next_video_id, index)
                 }
@@ -71,9 +76,11 @@ const QuestionList = ({
                 }}
               >
                 <div
-                  className="bg-violet-600 bg-opacity-80 font-mono font-thin 
+                  className={`bg-violet-600 bg-opacity-80 font-mono font-thin 
               text-sm w-8 h-8 rounded-full text-center flex items-center justify-center
-              mr-3 lg:text-white"
+              mr-3 lg:text-white
+              ${isTheqstInArabic[index] && "mr-0 ml-3"}
+              `}
                 >
                   {index + 1}
                 </div>
