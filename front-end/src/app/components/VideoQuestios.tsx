@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../AppContext";
 
 const QuestionList = ({
   handleQuestionClick,
   toggleAnimation,
   triggerBlink,
+  togglePlayback,
 }: any) => {
   const context = useAppContext();
 
@@ -21,6 +22,8 @@ const QuestionList = ({
     context.setClickedButtonIndex(index);
     context.setUpdatedCurrentTime(0);
     context.setPlaybackSpeed(1);
+    context.setaudioUrl("/audios/audioTest.mp3");
+    togglePlayback();
   };
 
   const [isTheqstInArabic, setisTheqstInArabic] = useState([false]);
@@ -34,6 +37,8 @@ const QuestionList = ({
         })
       );
     }
+
+    // context.setaudioUrl("");
   }, [context.videoAsk]);
 
   return (

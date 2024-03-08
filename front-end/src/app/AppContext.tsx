@@ -57,6 +57,10 @@ export type AppContextProps = {
   setMyVideoAsks: (myVideoAsks: MyVideoAsk[]) => void;
   isVideoPortrait: boolean;
   setisVideoPortrait: (isVideoPortrait: boolean) => void;
+  audioUrl: string;
+  setaudioUrl: (audioUrl: string) => void;
+  isAudioPlayed: boolean;
+  setisAudioPlayed: (isAudioPlayed: boolean) => void;
 };
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -100,6 +104,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isNavbarModalOpen, setNavbarModalOpen] = useState(false);
   const [myVideoAsks, setMyVideoAsks] = useState<MyVideoAsk[]>([]);
   const [isVideoPortrait, setisVideoPortrait] = useState(true);
+  const [audioUrl, setaudioUrl] = useState("");
+  const [isAudioPlayed, setisAudioPlayed] = useState(false);
 
   const contextValue: AppContextProps = {
     UpdatedCurrentTime,
@@ -144,6 +150,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setDropOpenModal,
     isVideoPortrait,
     setisVideoPortrait,
+    audioUrl,
+    setaudioUrl,
+    isAudioPlayed,
+    setisAudioPlayed,
   };
 
   return (

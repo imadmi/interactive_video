@@ -182,6 +182,14 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
     }
   }, [context.videoAsk.url]);
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const togglePlayback = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
+
   return (
     <div
       className="w-screen h-screen flex flex-col items-center 
@@ -251,7 +259,14 @@ const VideoAskComponent: React.FC<VideoAskComponentProps> = ({
           handleQuestionClick={handleQuestionClick}
           toggleAnimation={toggleAimation}
           triggerBlink={triggerBlink}
+          togglePlayback={togglePlayback}
         />
+        {/* {context.audioUrl !== "" && (
+        <audio ref={audioRef} src={context.audioUrl}>
+          <source src={context.audioUrl} type="audio/mpeg" />
+          Your browser does not support the element
+        </audio>
+      )} */}
       </div>
       {buttonLink && (
         <Link

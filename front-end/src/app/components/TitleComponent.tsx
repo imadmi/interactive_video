@@ -5,14 +5,13 @@ import { IoMdClose } from "react-icons/io";
 export default function TitleComponent() {
   const context = useAppContext();
   const [istitleVisible, setistitleVisible] = useState(true);
+  const [isTheqstInArabic, setisTheqstInArabic] = useState(false);
 
   useEffect(() => {
     if (context.videoAsk.title) {
       setistitleVisible(true);
     }
   }, [context.videoAsk.title]);
-
-  const [isTheqstInArabic, setisTheqstInArabic] = useState(false);
 
   useEffect(() => {
     if (context.videoAsk && context.videoAsk.title) {
